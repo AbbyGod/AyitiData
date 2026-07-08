@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --navy: #0D2B52;
+    --blue: #1A56A0;
+    --accent: #E8A020;
+    --green: #1E8A4C;
+    --light: #F4F7FB;
+    --border: #DDE3ED;
+    --text: #1C2A3A;
+    --muted: #6B7A90;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color: #1C2A3A;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: #1C2A3A;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #0D2B52;
+    font-weight: 700;
+  }
+
+  p, span, li, td, th, label, div {
+    color: inherit;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  input, textarea, select, button {
+    color: #1C2A3A;
+    font-family: inherit;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #9CA3AF;
+  }
 }
