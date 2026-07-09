@@ -52,6 +52,7 @@ export default function NewArticlePage() {
   const [language, setLanguage] = useState('en')
   const [slug, setSlug] = useState('')
   const [coverImage, setCoverImage] = useState('')
+  const [relatedDatasetId, setRelatedDatasetId] = useState('')
   const [saving, setSaving] = useState(false)
   const [publishing, setPublishing] = useState(false)
   const [preview, setPreview] = useState(false)
@@ -115,12 +116,12 @@ export default function NewArticlePage() {
       language,
       slug: slug || slugify(title),
       cover_image_url: coverImage,
-      status,
+     status,
       reading_time: readingTime,
       author_id: user?.id,
       published_at: status === 'published' ? new Date().toISOString() : null,
+      related_dataset_id: relatedDatasetId || null,
     })
-
     setter(false)
 
     if (error) {
@@ -284,7 +285,7 @@ export default function NewArticlePage() {
                     placeholder="auto-generated"
                   />
                 </div>
-                <div>
+               <div>
                   <label className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--muted)' }}>
                     Cover Image URL
                   </label>
@@ -294,6 +295,18 @@ export default function NewArticlePage() {
                     onChange={(e) => setCoverImage(e.target.value)}
                     className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-blue-400"
                     placeholder="https://..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold mb-1.5" style={{ color: 'var(--muted)' }}>
+                    Related Dataset ID
+                  </label>
+                  <input
+                    type="text"
+                    value={relatedDatasetId}
+                    onChange={(e) => setRelatedDatasetId(e.target.value)}
+                    className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-blue-400"
+                    placeholder="Paste dataset UUID from admin"
                   />
                 </div>
               </div>
