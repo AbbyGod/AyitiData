@@ -19,35 +19,47 @@ export default function ContactPage() {
   const [datasetSubmitting, setDatasetSubmitting] = useState(false)
   const [datasetSubmitted, setDatasetSubmitted] = useState(false)
 
-  async function handleContact(e: React.FormEvent) {
+ async function handleContact(e: React.FormEvent) {
     e.preventDefault()
+    if ((document.getElementById('website_trap') as HTMLInputElement)?.value) return
+    if (!form.name.trim() || form.name.trim().length < 2) { alert('Please enter your name.'); return }
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) { alert('Please enter a valid email.'); return }
+    if (!form.subject.trim() || form.subject.trim().length < 3) { alert('Please enter a subject.'); return }
+    if (!form.message.trim() || form.message.trim().length < 20) { alert('Please write a message of at least 20 characters.'); return }
     setSubmitting(true)
     const supabase = createClient()
-    await supabase.from('submissions').insert({
-      name: form.name,
-      email: form.email,
-      title: `Contact: ${form.category} — ${form.subject}`,
-      abstract: form.message,
+    const { error } = await supabase.from('submissions').insert({
+      name: form.name.trim(),
+      email: form.email.trim().toLowerCase(),
+      title: `Contact: ${form.category || 'General'} — ${form.subject.trim()}`,
+      abstract: form.message.trim(),
       category: 'Other',
       status: 'pending',
     })
     setSubmitting(false)
+    if (error) { alert('Something went wrong. Please try again.'); return }
     setSubmitted(true)
   }
 
-  async function handleDatasetRequest(e: React.FormEvent) {
+async function handleDatasetRequest(e: React.FormEvent) {
     e.preventDefault()
+    if ((document.getElementById('website_trap') as HTMLInputElement)?.value) return
+    if (!datasetForm.name.trim() || datasetForm.name.trim().length < 2) { alert('Please enter your name.'); return }
+    if (!datasetForm.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(datasetForm.email)) { alert('Please enter a valid email.'); return }
+    if (!datasetForm.description.trim() || datasetForm.description.trim().length < 10) { alert('Please describe the dataset you need.'); return }
+    if (!datasetForm.reason.trim() || datasetForm.reason.trim().length < 20) { alert('Please explain why you need this data (at least 20 characters).'); return }
     setDatasetSubmitting(true)
     const supabase = createClient()
-    await supabase.from('dataset_requests').insert({
-      name: datasetForm.name,
-      email: datasetForm.email,
-      description: datasetForm.description,
+    const { error } = await supabase.from('dataset_requests').insert({
+      name: datasetForm.name.trim(),
+      email: datasetForm.email.trim().toLowerCase(),
+      description: datasetForm.description.trim(),
       category: datasetForm.category,
-      reason: datasetForm.reason,
+      reason: datasetForm.reason.trim(),
       status: 'pending',
     })
     setDatasetSubmitting(false)
+    if (error) { alert('Something went wrong. Please try again.'); return }
     setDatasetSubmitted(true)
   }
 
@@ -174,6 +186,8 @@ export default function ContactPage() {
                       <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} required rows={5}
                         className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400 resize-none" />
                     </div>
+                    <input type="text" id="website_trap" name="website_trap"
+  style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
                     <button type="submit" disabled={submitting}
                       className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white disabled:opacity-60"
                       style={{ background: 'var(--navy)' }}>
@@ -239,6 +253,8 @@ export default function ContactPage() {
                         placeholder="Explain how you plan to use this dataset..."
                         className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400 resize-none" />
                     </div>
+                    <input type="text" id="website_trap" name="website_trap"
+  style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
                     <button type="submit" disabled={datasetSubmitting}
                       className="self-start inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white disabled:opacity-60"
                       style={{ background: 'var(--navy)' }}>

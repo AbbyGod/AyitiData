@@ -216,12 +216,8 @@ export default function Navbar() {
             </Link>
 
             {/* LOGIN */}
-            <Link
-              href="/login"
-              className="px-4 py-1.5 rounded-lg text-sm font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              Login
-            </Link>
+          
+          {/*Will add login later, for now I will keep it like this  */}
 
           </div>
 
@@ -294,9 +290,7 @@ export default function Navbar() {
             <Link href="/support-us" className="text-center py-2 rounded-lg text-sm font-semibold text-white" style={{ background: 'var(--accent)' }}>
               ❤️ Support Us
             </Link>
-            <Link href="/login" className="text-center py-2 rounded-lg text-sm font-semibold border border-gray-200 text-gray-700">
-              Login
-            </Link>
+  
           </div>
         </div>
       )}

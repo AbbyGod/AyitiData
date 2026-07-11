@@ -18,27 +18,41 @@ export default function SubmitResearchPage() {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
-  async function handleSubmit(e: React.FormEvent) {
+async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!form.name || !form.email || !form.title || !form.abstract) {
-      alert('Please fill in all required fields.')
-      return
+
+    // Honeypot check
+    if ((document.getElementById('website') as HTMLInputElement)?.value) return
+
+    // Validation
+    if (!form.name.trim() || form.name.trim().length < 2) {
+      alert('Please enter your full name.'); return
     }
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      alert('Please enter a valid email address.'); return
+    }
+    if (!form.title.trim() || form.title.trim().length < 5) {
+      alert('Please enter a research title (at least 5 characters).'); return
+    }
+    if (!form.abstract.trim() || form.abstract.trim().length < 50) {
+      alert('Please provide a summary of at least 50 characters.'); return
+    }
+
     setSubmitting(true)
     const supabase = createClient()
-    await supabase.from('submissions').insert({
-      name: form.name,
-      email: form.email,
-      title: form.title,
+    const { error } = await supabase.from('submissions').insert({
+      name: form.name.trim(),
+      email: form.email.trim().toLowerCase(),
+      title: form.title.trim(),
       category: form.category,
-      abstract: form.abstract,
-      file_url: form.file_url || null,
+      abstract: form.abstract.trim(),
+      file_url: form.file_url.trim() || null,
       status: 'pending',
     })
     setSubmitting(false)
+    if (error) { alert('Something went wrong. Please try again.'); return }
     setSubmitted(true)
   }
-
   if (submitted) {
     return (
       <div className="min-h-screen flex items-center justify-center px-4"
@@ -153,6 +167,9 @@ export default function SubmitResearchPage() {
             </div>
 
             <div className="pt-2">
+              {/* HONEYPOT — hidden from real users, catches bots */}
+            <input type="text" id="website" name="website" 
+              style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
               <button type="submit" disabled={submitting}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white disabled:opacity-60"
                 style={{ background: 'var(--navy)' }}>
