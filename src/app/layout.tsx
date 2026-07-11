@@ -1,9 +1,12 @@
+
+
 import type { Metadata } from 'next'
 import { Inter, Sora } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { LanguageProvider } from '@/lib/i18n/LanguageContext'
+import CookieBanner from '@/components/layout/CookieBanner'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -50,6 +53,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+  import CookieBanner from '@/components/layout/CookieBanner'      
         </LanguageProvider>
       </body>
     </html>
