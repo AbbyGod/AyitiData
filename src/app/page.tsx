@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
@@ -61,14 +62,7 @@ function AnimatedCounter({ target, suffix = '', prefix = '' }: {
 // ═══════════════════════════════════════════
 // KEY HAITI STATS
 // ═══════════════════════════════════════════
-const haitiStats = [
-  { icon: Users, label: 'Population', value: 12, suffix: 'M+', description: 'People in Haiti', color: '#1A56A0', bg: '#E8F0FC' },
-  { icon: DollarSign, label: 'GDP', value: 8, suffix: 'B USD', prefix: '$', description: 'Gross Domestic Product', color: '#1E8A4C', bg: '#E6F5ED' },
-  { icon: MapPin, label: 'Area', value: 27750, suffix: ' km²', description: 'Total land area', color: '#E8A020', bg: '#FFF8E1' },
-  { icon: GraduationCap, label: 'Literacy Rate', value: 61, suffix: '%', description: 'Adult literacy rate', color: '#7C3AED', bg: '#F3E8FF' },
-  { icon: Activity, label: 'Life Expectancy', value: 64, suffix: ' yrs', description: 'Average life expectancy', color: '#C0392B', bg: '#FDE8E8' },
-  { icon: TrendingUp, label: 'Inflation', value: 28, suffix: '%', description: 'Annual inflation rate 2024', color: '#0D2B52', bg: '#E8F0FC' },
-]
+
 
 // ═══════════════════════════════════════════
 // FEATURED DATASETS
@@ -107,6 +101,17 @@ const categoryColors: Record<string, string> = {
 }
 
 export default function HomePage() {
+  const { t } = useLanguage()
+
+  const haitiStats = [
+    { icon: Users, label: t('stat_population'), value: 12, suffix: 'M+', description: t('stat_population_desc'), color: '#1A56A0', bg: '#E8F0FC' },
+    { icon: DollarSign, label: t('stat_gdp'), value: 8, suffix: 'B USD', prefix: '$', description: t('stat_gdp_desc'), color: '#1E8A4C', bg: '#E6F5ED' },
+    { icon: MapPin, label: t('stat_area'), value: 27750, suffix: ' km²', description: t('stat_area_desc'), color: '#E8A020', bg: '#FFF8E1' },
+    { icon: GraduationCap, label: t('stat_literacy'), value: 61, suffix: '%', description: t('stat_literacy_desc'), color: '#7C3AED', bg: '#F3E8FF' },
+    { icon: Activity, label: t('stat_life'), value: 64, suffix: ' yrs', description: t('stat_life_desc'), color: '#C0392B', bg: '#FDE8E8' },
+    { icon: TrendingUp, label: t('stat_inflation'), value: 28, suffix: '%', description: t('stat_inflation_desc'), color: '#0D2B52', bg: '#E8F0FC' },
+  ]
+
   return (
     <div className="min-h-screen">
 
@@ -121,23 +126,22 @@ export default function HomePage() {
           <div className="max-w-3xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white/80 border border-white/20 mb-6">
-                🇭🇹 Open Data Platform for Haiti
+                {t('hero_badge')}
               </span>
               <h1 className="font-sora text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                Data about Haiti,{' '}
-                <span style={{ color: '#E8A020' }}>open and accessible</span>{' '}
-                to all.
+               {t('hero_title_1')}{' '}
+                <span style={{ color: '#E8A020' }}>{t('hero_title_2')}</span>{' '}
+                {t('hero_title_3')}
               </h1>
               <p className="text-lg text-white/70 max-w-xl mb-10 leading-relaxed">
-                Ayiti Data collects, cleans, and publishes high-quality data about Haiti —
-                empowering students, researchers, journalists, NGOs, and citizens.
+                {t('hero_desc')}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/datasets" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-0.5" style={{ background: '#E8A020' }}>
-                  <Database className="w-4 h-4" /> Explore Datasets <ArrowRight className="w-4 h-4" />
+                  <Database className="w-4 h-4" /> {t('hero_btn_datasets')} <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link href="/insights" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
-                  <BookOpen className="w-4 h-4" /> Read Insights
+                 <BookOpen className="w-4 h-4" /> {t('hero_btn_insights')}
                 </Link>
                 <Link href="/reports" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
                   <Download className="w-4 h-4" /> Reports
@@ -152,8 +156,8 @@ export default function HomePage() {
       <section className="py-16 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-center mb-12">
-            <h2 className="font-sora text-2xl font-bold mb-2" style={{ color: 'var(--navy)' }}>Haiti in Numbers</h2>
-            <p className="text-sm" style={{ color: 'var(--muted)' }}>Key indicators updated regularly from trusted sources</p>
+            <h2 className="font-sora text-2xl font-bold mb-2" style={{ color: 'var(--navy)' }}>{t('stats_title')}</h2>
+            <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('stats_desc')}</p>
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {haitiStats.map((stat, i) => (
@@ -182,7 +186,7 @@ export default function HomePage() {
               <p className="text-sm" style={{ color: 'var(--muted)' }}>Datasets to download and reports to explore</p>
             </div>
           <Link href="/resources" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
-  View Resources <ArrowRight className="w-3.5 h-3.5" />
+  {t('resources_view')} <ArrowRight className="w-3.5 h-3.5" />
 </Link>
           </div>
 
@@ -193,7 +197,7 @@ export default function HomePage() {
                 <Link href={dataset.href} className="block bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1 group h-full">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ background: '#E8F0FC', color: '#1A56A0' }}>Dataset</span>
+                      <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ background: '#E8F0FC', color: '#1A56A0' }}>{t('badge_dataset')}</span>
                       <span className="px-2.5 py-1 rounded-full text-xs font-semibold"
                         style={{ background: (categoryColors[dataset.category] || '#1A56A0') + '15', color: categoryColors[dataset.category] || '#1A56A0' }}>
                         {dataset.category}
@@ -216,7 +220,7 @@ export default function HomePage() {
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ background: '#E6F5ED', color: '#1E8A4C' }}>Report</span>
-                      <span className="px-2.5 py-1 rounded-full text-xs font-semibold" style={{ background: '#F4F7FB', color: '#6B7A90' }}>{report.category}</span>
+                      <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ background: '#E6F5ED', color: '#1E8A4C' }}>{t('badge_report')}</span>
                     </div>
                     <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--blue)' }} />
                   </div>
@@ -238,11 +242,11 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="font-sora text-2xl font-bold mb-1" style={{ color: 'var(--navy)' }}>Latest Insights</h2>
-              <p className="text-sm" style={{ color: 'var(--muted)' }}>Data-driven analyses on Haiti</p>
+              <h2 className="font-sora text-2xl font-bold mb-1" style={{ color: 'var(--navy)' }}>{t('insights_title')}</h2>
+              <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('insights_desc')}</p>
             </div>
             <Link href="/insights" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
-              View all <ArrowRight className="w-3.5 h-3.5" />
+             {t('insights_view')} <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -256,12 +260,12 @@ export default function HomePage() {
                         style={{ background: (categoryColors[insight.category] || '#1A56A0') + '15', color: categoryColors[insight.category] || '#1A56A0' }}>
                         {insight.category}
                       </span>
-                      <span className="text-xs" style={{ color: 'var(--muted)' }}>{insight.readingTime} min read</span>
+                      <span className="text-xs" style={{ color: 'var(--muted)' }}>{insight.readingTime} {t('min_read')}</span>
                     </div>
                     <h3 className="font-semibold text-sm leading-snug mb-3" style={{ color: 'var(--navy)' }}>{insight.title}</h3>
                     <div className="flex items-center justify-between text-xs" style={{ color: 'var(--muted)' }}>
                       <span>{insight.date}</span>
-                      <span>👁 {insight.views.toLocaleString()} views</span>
+                      <span>👁 {insight.views.toLocaleString()} {t('views')}</span>
                     </div>
                   </div>
                 </Link>
@@ -275,16 +279,16 @@ export default function HomePage() {
       <section className="py-16" style={{ background: 'linear-gradient(135deg, #0D2B52 0%, #1A56A0 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-            <h2 className="font-sora text-3xl font-bold text-white mb-4">Help us keep Haiti's data open</h2>
+            <h2 className="font-sora text-3xl font-bold text-white mb-4">{t('support_title')}</h2>
             <p className="text-white/70 max-w-xl mx-auto mb-8 text-base leading-relaxed">
-              Ayiti Data is free for everyone. Your support funds our analysts, technical infrastructure, and community programs.
+              {t('support_desc')}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link href="/support-us" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-0.5" style={{ background: '#E8A020' }}>
-                ❤️ Support Ayiti Data
+                {t('support_btn')}
               </Link>
               <Link href="/work-with-us/partner" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
-                🤝 Become a Partner
+                {t('partner_btn')}
               </Link>
             </div>
           </motion.div>
@@ -295,9 +299,9 @@ export default function HomePage() {
       <section className="py-14 bg-white border-t border-gray-100">
         <div className="max-w-xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-            <h2 className="font-sora text-2xl font-bold mb-2" style={{ color: 'var(--navy)' }}>📬 Stay in the loop</h2>
+            <h2 className="font-sora text-2xl font-bold mb-2" style={{ color: 'var(--navy)' }}>{t('newsletter_title')}</h2>
             <p className="text-sm mb-6" style={{ color: 'var(--muted)' }}>
-              Get notified when new datasets, insights, and reports are published. No spam, unsubscribe anytime.
+              {t('newsletter_desc')}
             </p>
             <form onSubmit={e => e.preventDefault()} className="flex gap-2 max-w-md mx-auto">
               <input type="email" placeholder="your@email.com"

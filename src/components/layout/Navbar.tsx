@@ -1,5 +1,7 @@
 'use client'
 
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import type { Language } from '@/lib/i18n/translations'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -19,47 +21,39 @@ import {
   Home,
 } from 'lucide-react'
 
-const languages = [
-  { code: 'en', label: 'EN', name: 'English' },
-  { code: 'fr', label: 'FR', name: 'Français' },
-  { code: 'ht', label: 'KR', name: 'Kreyòl' },
-  { code: 'es', label: 'ES', name: 'Español' },
-]
-
-const navLinks = [
-  { href: '/', label: 'Home', icon: Home },
-  { href: '/datasets', label: 'Datasets', icon: Database },
-  { href: '/insights', label: 'Insights', icon: BookOpen },
-  { href: '/reports', label: 'Reports', icon: FileText },
-  { href: '/glossary', label: 'Glossary', icon: BookOpen },
-  {
-    label: 'About',
-    icon: Users,
-    dropdown: [
-      { href: '/about', label: 'Mission' },
-      { href: '/team', label: 'Our Team' },
-      { href: '/partners', label: 'Partners' },
-    ],
-  },
-  {
-    label: 'Work With Us',
-    icon: Handshake,
-    dropdown: [
-      { href: '/work-with-us/submit', label: 'Submit Research' },
-      { href: '/work-with-us/partner', label: 'Partner With Us' },
-      { href: '/work-with-us/join', label: 'Join the Team' },
-    ],
-  },
-]
-
 export default function Navbar() {
   const pathname = usePathname()
+  const { lang, setLang, t } = useLanguage()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const [activeLang, setActiveLang] = useState('en')
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
+
+  const navLinks = [
+    { href: '/', label: t('nav_home') },
+    { href: '/datasets', label: t('nav_datasets') },
+    { href: '/insights', label: t('nav_insights') },
+    { href: '/reports', label: t('nav_reports') },
+    { href: '/glossary', label: t('nav_glossary') },
+    {
+      label: t('nav_about'),
+      dropdown: [
+        { href: '/about', label: t('nav_mission') },
+        { href: '/team', label: t('nav_team') },
+        { href: '/partners', label: t('nav_partners') },
+      ],
+    },
+    {
+      label: t('nav_work'),
+      dropdown: [
+        { href: '/work-with-us/submit', label: t('nav_submit') },
+        { href: '/work-with-us/partner', label: t('nav_partner') },
+        { href: '/work-with-us/join', label: t('nav_join') },
+      ],
+    },
+  ]
+
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
@@ -183,38 +177,34 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* LANGUAGE TOGGLE */}
+         {/* LANGUAGE TOGGLE */}
             <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-              {languages.map((lang) => (
+              {(['fr', 'en', 'ht', 'es'] as Language[]).map((code) => (
                 <button
-                  key={lang.code}
-                  onClick={() => setActiveLang(lang.code)}
+                  key={code}
+                  onClick={() => setLang(code)}
                   className={cn(
-                    'px-2.5 py-1 text-xs font-semibold transition-colors',
-                    activeLang === lang.code
+                    'px-2.5 py-1 text-xs font-semibold transition-colors uppercase',
+                    lang === code
                       ? 'text-white'
                       : 'text-gray-500 hover:text-gray-900'
                   )}
-                  style={activeLang === lang.code
-                    ? { background: 'var(--navy)' }
-                    : {}}
-                  title={lang.name}
+                  style={lang === code ? { background: 'var(--navy)' } : {}}
                 >
-                  {lang.label}
+                  {code === 'ht' ? 'KR' : code.toUpperCase()}
                 </button>
               ))}
             </div>
 
             {/* SUPPORT US */}
-            <Link
+          <Link
               href="/support-us"
               className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90"
               style={{ background: 'var(--accent)' }}
             >
               <HandHeart className="w-3.5 h-3.5" />
-              Support Us
+              {t('nav_support')}
             </Link>
-
             {/* LOGIN */}
           
           {/*Will add login later, for now I will keep it like this  */}
@@ -271,21 +261,23 @@ export default function Navbar() {
           })}
           <div className="pt-3 border-t border-gray-100 flex flex-col gap-2">
             <div className="flex gap-1">
-              {languages.map((lang) => (
+           <div className="flex gap-1">
+              {(['fr', 'en', 'ht', 'es'] as Language[]).map((code) => (
                 <button
-                  key={lang.code}
-                  onClick={() => setActiveLang(lang.code)}
+                  key={code}
+                  onClick={() => setLang(code)}
                   className={cn(
-                    'flex-1 py-1.5 text-xs font-semibold rounded-lg transition-colors',
-                    activeLang === lang.code
+                    'flex-1 py-1.5 text-xs font-semibold rounded-lg transition-colors uppercase',
+                    lang === code
                       ? 'text-white'
                       : 'text-gray-500 border border-gray-200'
                   )}
-                  style={activeLang === lang.code ? { background: 'var(--navy)' } : {}}
+                  style={lang === code ? { background: 'var(--navy)' } : {}}
                 >
-                  {lang.label}
+                  {code === 'ht' ? 'KR' : code.toUpperCase()}
                 </button>
               ))}
+            </div>
             </div>
             <Link href="/support-us" className="text-center py-2 rounded-lg text-sm font-semibold text-white" style={{ background: 'var(--accent)' }}>
               ❤️ Support Us

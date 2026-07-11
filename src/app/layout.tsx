@@ -3,6 +3,7 @@ import { Inter, Sora } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import { LanguageProvider } from '@/lib/i18n/LanguageContext'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
     default: 'Ayiti Data — Open Data About Haiti',
     template: '%s | Ayiti Data',
   },
-  description: 'The most comprehensive open data platform about Haiti. Clean datasets, data-driven insights, and reports on education, economy, health, and more.',
-  keywords: ['Haiti', 'Ayiti', 'open data', 'datasets', 'Haiti economy', 'Haiti health', 'Haiti education'],
+  description: 'The most comprehensive open data platform about Haiti.',
+  keywords: ['Haiti', 'Ayiti', 'open data', 'datasets'],
   authors: [{ name: 'Ayiti Data Team' }],
   openGraph: {
     type: 'website',
@@ -32,15 +33,7 @@ export const metadata: Metadata = {
     title: 'Ayiti Data — Open Data About Haiti',
     description: 'The most comprehensive open data platform about Haiti.',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Ayiti Data — Open Data About Haiti',
-    description: 'The most comprehensive open data platform about Haiti.',
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 }
 
 export default function RootLayout({
@@ -51,15 +44,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${sora.variable} font-sans antialiased`}>
-        <Navbar />
-        <main className="pt-16">
-          {children}
-        </main>
-        <Footer />
+        <LanguageProvider>
+          <Navbar />
+          <main className="pt-16">
+            {children}
+          </main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   )
 }
-
-
-
