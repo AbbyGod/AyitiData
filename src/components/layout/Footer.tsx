@@ -1,3 +1,7 @@
+'use client'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { 
   Mail,
@@ -12,34 +16,7 @@ import {
   FaFacebook
 } from 'react-icons/fa6'
 
-const footerLinks = {
-  explore: [
-    { href: '/datasets', label: 'Datasets' },
-    { href: '/insights', label: 'Insights' },
-    { href: '/reports', label: 'Reports' },
-    { href: '/glossary', label: 'Glossary' },
-    { href: '/map', label: 'Data Map' },
-  ],
-  about: [
-    { href: '/about', label: 'Our Mission' },
-    { href: '/team', label: 'The Team' },
-    { href: '/partners', label: 'Partners' },
-    { href: '/work-with-us/join', label: 'Join the Team' },
-    { href: '/work-with-us/partner', label: 'Partner With Us' },
-  ],
-  contribute: [
-    { href: '/work-with-us/submit', label: 'Submit Research' },
-    { href: '/request-dataset', label: 'Request a Dataset' },
-    { href: '/support-us', label: 'Support Us' },
-    { href: '/newsletter', label: 'Newsletter' },
-    { href: '/contact', label: 'Contact Us' },
-  ],
-  legal: [
-    { href: '/terms', label: 'Terms of Service' },
-    { href: '/privacy', label: 'Privacy Policy' },
-    { href: '/cookies', label: 'Cookie Policy' },
-  ],
-}
+
 
 const socialLinks = [
   { href: 'https://twitter.com/ayitidata', icon: FaXTwitter, label: 'Twitter' },
@@ -47,7 +24,91 @@ const socialLinks = [
   { href: 'https://youtube.com/@ayitidata', icon: FaYoutube, label: 'YouTube' },
   { href: 'https://facebook.com/ayitidata', icon: FaFacebook, label: 'Facebook' },
 ]
+
+function NewsletterForm() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return
+    setStatus('loading')
+    const supabase = createClient()
+    const { error } = await supabase.from('subscribers').insert({
+      email: email.trim().toLowerCase(),
+      confirmed: false,
+    })
+    if (error && error.code === '23505') {
+      setStatus('success')
+      return
+    }
+    setStatus(error ? 'error' : 'success')
+    if (!error) setEmail('')
+  }
+
+  if (status === 'success') {
+    return (
+      <p className="text-sm font-semibold" style={{ color: '#6EE7B7' }}>
+        ✓ You're subscribed!
+      </p>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <input
+        type="email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        placeholder="your@email.com"
+        required
+        className="px-3 py-2 text-sm rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/40 outline-none focus:border-white/40 transition-colors"
+      />
+      <button
+        type="submit"
+        disabled={status === 'loading'}
+        className="px-3 py-2 text-sm font-semibold rounded-lg text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+        style={{ background: 'var(--accent)' }}
+      >
+        {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+      </button>
+      {status === 'error' && (
+        <p className="text-xs" style={{ color: '#FCA5A5' }}>Something went wrong. Try again.</p>
+      )}
+    </form>
+  )
+}
+
+
 export default function Footer() {
+  const { t } = useLanguage()
+  const footerLinks = {
+    explore: [
+      { href: '/datasets', label: t('nav_datasets') },
+      { href: '/insights', label: t('nav_insights') },
+      { href: '/reports', label: t('nav_reports') },
+      { href: '/glossary', label: t('nav_glossary') },
+      { href: '/map', label: t('footer_map') },
+    ],
+    about: [
+      { href: '/about', label: t('nav_mission') },
+      { href: '/team', label: t('nav_team') },
+      { href: '/partners', label: t('nav_partners') },
+      { href: '/work-with-us/join', label: t('nav_join') },
+      { href: '/work-with-us/partner', label: t('nav_partner') },
+    ],
+    contribute: [
+      { href: '/work-with-us/submit', label: t('nav_submit') },
+      { href: '/contact', label: t('footer_request') },
+      { href: '/support-us', label: t('nav_support') },
+      { href: '/contact', label: t('footer_contact') },
+    ],
+    legal: [
+      { href: '/terms', label: t('footer_terms') },
+      { href: '/privacy', label: t('footer_privacy') },
+      { href: '/cookies', label: t('footer_cookies') },
+    ],
+  }
   return (
     <footer style={{ background: 'var(--navy)' }} className="text-white">
 
@@ -69,10 +130,7 @@ export default function Footer() {
                 Ayiti Data
               </span>
             </Link>
-            <p className="text-sm text-white/60 leading-relaxed mb-6 max-w-xs">
-              Making data about Haiti open, clean, and accessible to everyone — 
-              students, researchers, journalists, NGOs, and citizens.
-            </p>
+            <p>{t('footer_tagline')}</p>
 
             {/* SOCIAL LINKS */}
             <div className="flex gap-3">
@@ -118,8 +176,8 @@ export default function Footer() {
           {/* EXPLORE */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Explore
-            </h4>
+        About
+      </h4>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.explore.map((link) => (
                 <li key={link.label}>
@@ -137,8 +195,8 @@ export default function Footer() {
           {/* ABOUT */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              About
-            </h4>
+        {t('footer_about')}
+      </h4>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.about.map((link) => (
                 <li key={link.label}>
@@ -156,8 +214,8 @@ export default function Footer() {
           {/* CONTRIBUTE */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Contribute
-            </h4>
+        {t('footer_contribute')}
+      </h4>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.contribute.map((link) => (
                 <li key={link.label}>
@@ -174,12 +232,12 @@ export default function Footer() {
 
           {/* NEWSLETTER */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              Stay Updated
-            </h4>
-            <p className="text-sm text-white/60 mb-4">
-              Get notified when new datasets and insights are published.
-            </p>
+          <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
+          {t('stay_updated')}
+        </h4>
+        <p className="text-sm text-white/60 mb-4">
+          {t('stay_updated_desc')}
+        </p>
          <form className="flex flex-col gap-2">
               <input
                 type="email"
@@ -202,9 +260,7 @@ export default function Footer() {
       {/* BOTTOM BAR */}
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/40">
-            © {new Date().getFullYear()} Ayiti Data. All rights reserved.
-          </p>
+          <span>© {new Date().getFullYear()} Ayiti Data. {t('footer_rights')}</span>
           <div className="flex items-center gap-6">
             {footerLinks.legal.map((link) => (
               <Link
@@ -216,9 +272,7 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-          <p className="text-xs text-white/30">
-            Made with ❤️ for Haiti
-          </p>
+         <p>{t('footer_made')}</p>
         </div>
       </div>
 
