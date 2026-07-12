@@ -21,39 +21,7 @@ const categoryColors: Record<string, { bg: string; color: string }> = {
   Other: { bg: '#F4F7FB', color: '#6B7A90' },
 }
 
-// DEMO REPORTS — will be replaced by real Supabase data
-const demoReports = [
-  {
-    id: '1',
-    title: 'Haiti Economic Update 2024',
-    organization: 'World Bank',
-    category: 'Economy',
-    year: 2024,
-    description: 'Annual assessment of Haiti\'s economic situation including GDP, inflation, trade balance, and fiscal outlook.',
-    embed_url: 'https://documents.worldbank.org/en/publication/documents-reports/documentdetail/099062224090529429',
-    pdf_url: null,
-  },
-  {
-    id: '2',
-    title: 'Haiti Humanitarian Response Plan 2024',
-    organization: 'OCHA',
-    category: 'Other',
-    year: 2024,
-    description: 'Comprehensive humanitarian needs and response plan covering food security, health, shelter, and protection.',
-    embed_url: 'https://www.unocha.org/haiti',
-    pdf_url: null,
-  },
-  {
-    id: '3',
-    title: 'Education Sector Analysis Haiti',
-    organization: 'UNESCO',
-    category: 'Education',
-    year: 2023,
-    description: 'Detailed analysis of Haiti\'s education system including enrollment rates, infrastructure, and policy recommendations.',
-    embed_url: 'https://www.unesco.org/en/countries/ht',
-    pdf_url: null,
-  },
-]
+
 
 export default function ReportsPage() {
   const [reports, setReports] = useState<any[]>([])
@@ -69,7 +37,7 @@ export default function ReportsPage() {
         .from('reports')
         .select('*')
         .order('year', { ascending: false })
-      setReports(data && data.length > 0 ? data : demoReports)
+      setReports(data || [])
       setLoading(false)
     }
     loadReports()

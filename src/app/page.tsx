@@ -182,8 +182,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="font-sora text-2xl font-bold mb-1" style={{ color: 'var(--navy)' }}>Latest Resources</h2>
-              <p className="text-sm" style={{ color: 'var(--muted)' }}>Datasets to download and reports to explore</p>
+              <h2 className="font-sora text-2xl font-bold mb-1" style={{ color: 'var(--navy)' }}>{t('insights_title')}</h2>
+              <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('insights_desc')}</p>
             </div>
           <Link href="/resources" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
   {t('resources_view')} <ArrowRight className="w-3.5 h-3.5" />

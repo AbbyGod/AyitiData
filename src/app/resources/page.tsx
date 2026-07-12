@@ -24,20 +24,7 @@ const categoryColors: Record<string, { bg: string; color: string }> = {
   Other: { bg: '#F4F7FB', color: '#6B7A90' },
 }
 
-const demoDatasets = [
-  { id: 'd1', type: 'dataset', title: 'Haiti Population 2020–2024', description: 'Population estimates by year, department and municipality.', source: 'World Bank', category: 'Population', csv_url: '#', excel_url: '#', json_url: '#', download_count: 1240, last_updated: '2024-05-12T00:00:00Z' },
-  { id: 'd2', type: 'dataset', title: 'Education Statistics 2016–2023', description: 'School enrollment, teachers, and schools by department.', source: 'MENFP', category: 'Education', csv_url: '#', excel_url: '#', json_url: null, download_count: 890, last_updated: '2024-04-30T00:00:00Z' },
-  { id: 'd3', type: 'dataset', title: 'Inflation Data 2010–2024', description: 'Monthly inflation rate and consumer price index.', source: 'IHSI', category: 'Economy', csv_url: '#', excel_url: '#', json_url: null, download_count: 2100, last_updated: '2024-05-05T00:00:00Z' },
-  { id: 'd4', type: 'dataset', title: 'Health Facilities by Region', description: 'Hospital locations, bed counts and service availability by commune.', source: 'MSPP', category: 'Health', csv_url: '#', excel_url: '#', json_url: '#', download_count: 670, last_updated: '2024-03-18T00:00:00Z' },
-  { id: 'd5', type: 'dataset', title: 'GDP & Trade 1990–2023', description: 'Annual GDP, imports, exports and public debt data.', source: 'BRH / IMF', category: 'Economy', csv_url: '#', excel_url: '#', json_url: null, download_count: 1560, last_updated: '2024-04-10T00:00:00Z' },
-  { id: 'd6', type: 'dataset', title: 'Agricultural Production 2005–2022', description: 'Crop yield, cultivated land area and food security indicators.', source: 'MARNDR', category: 'Agriculture', csv_url: '#', excel_url: '#', json_url: null, download_count: 430, last_updated: '2024-02-22T00:00:00Z' },
-]
 
-const demoReports = [
-  { id: 'r1', type: 'report', title: 'Haiti Economic Update 2024', description: 'Annual assessment of Haiti\'s economic situation including GDP, inflation and fiscal outlook.', organization: 'World Bank', category: 'Economy', year: 2024, embed_url: 'https://worldbank.org', pdf_url: null },
-  { id: 'r2', type: 'report', title: 'Haiti Humanitarian Response Plan 2024', description: 'Comprehensive humanitarian needs covering food security, health, shelter and protection.', organization: 'OCHA', category: 'Other', year: 2024, embed_url: 'https://unocha.org', pdf_url: null },
-  { id: 'r3', type: 'report', title: 'Education Sector Analysis Haiti', description: 'Detailed analysis of Haiti\'s education system including enrollment and policy recommendations.', organization: 'UNESCO', category: 'Education', year: 2023, embed_url: 'https://unesco.org', pdf_url: null },
-]
 
 export default function ResourcesPage() {
   const [items, setItems] = useState<any[]>([])
@@ -54,8 +41,8 @@ export default function ResourcesPage() {
         supabase.from('datasets').select('*').order('created_at', { ascending: false }),
         supabase.from('reports').select('*').order('year', { ascending: false }),
       ])
-      const ds = (datasets && datasets.length > 0 ? datasets : demoDatasets).map((d: any) => ({ ...d, type: 'dataset' }))
-      const rs = (reports && reports.length > 0 ? reports : demoReports).map((r: any) => ({ ...r, type: 'report' }))
+      const ds = (datasets || []).map((d: any) => ({ ...d, type: 'dataset' }))
+const rs = (reports || []).map((r: any) => ({ ...r, type: 'report' }))
       setItems([...ds, ...rs])
       setLoading(false)
     }

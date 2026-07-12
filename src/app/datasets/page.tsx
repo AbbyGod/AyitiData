@@ -24,63 +24,17 @@ const categoryColors: Record<string, { bg: string; color: string }> = {
   Other: { bg: '#F4F7FB', color: '#6B7A90' },
 }
 
-// DEMO DATA — will be replaced by Supabase data automatically
-const demoDatasets = [
-  {
-    id: '1', title: 'Haiti Population 2020–2024',
-    description: 'Population estimates by year, department and municipality. Includes age, sex, and urban/rural breakdown.',
-    source: 'World Bank', category: 'Population',
-    csv_url: '#', excel_url: '#', json_url: '#',
-    download_count: 1240,
-    last_updated: '2024-05-12T00:00:00Z',
-  },
-  {
-    id: '2', title: 'Education Statistics 2016–2023',
-    description: 'School enrollment, number of teachers, and schools by department. Primary, secondary, and tertiary levels.',
-    source: 'MENFP', category: 'Education',
-    csv_url: '#', excel_url: '#', json_url: null,
-    download_count: 890,
-    last_updated: '2024-04-30T00:00:00Z',
-  },
-  {
-    id: '3', title: 'Inflation Data 2010–2024',
-    description: 'Monthly inflation rate, consumer price index, and food price inflation by category.',
-    source: 'IHSI', category: 'Economy',
-    csv_url: '#', excel_url: '#', json_url: null,
-    download_count: 2100,
-    last_updated: '2024-05-05T00:00:00Z',
-  },
-  {
-    id: '4', title: 'Health Facilities by Region',
-    description: 'Hospital locations, bed counts, doctors per capita, and service availability by commune and department.',
-    source: 'MSPP', category: 'Health',
-    csv_url: '#', excel_url: '#', json_url: '#',
-    download_count: 670,
-    last_updated: '2024-03-18T00:00:00Z',
-  },
-  {
-    id: '5', title: 'GDP & Trade 1990–2023',
-    description: 'Annual GDP, imports, exports, balance of payments, and public debt data.',
-    source: 'BRH / IMF', category: 'Economy',
-    csv_url: '#', excel_url: '#', json_url: null,
-    download_count: 1560,
-    last_updated: '2024-04-10T00:00:00Z',
-  },
-  {
-    id: '6', title: 'Agricultural Production 2005–2022',
-    description: 'Crop yield, cultivated land area, food security indicators and rainfall data by region.',
-    source: 'MARNDR', category: 'Agriculture',
-    csv_url: '#', excel_url: '#', json_url: null,
-    download_count: 430,
-    last_updated: '2024-02-22T00:00:00Z',
-  },
-]
 
 export default function DatasetsPage() {
   const [datasets, setDatasets] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const q = params.get('search')
+    if (q) setSearch(q)
+  }, [])
 
   useEffect(() => {
     async function loadDatasets() {
@@ -90,8 +44,8 @@ export default function DatasetsPage() {
         .select('*')
         .order('created_at', { ascending: false })
 
-      // Use real data if available, otherwise show demo data
-      setDatasets(data && data.length > 0 ? data : demoDatasets)
+      // Show dataset added on supabase
+    setDatasets(data || [])
       setLoading(false)
     }
     loadDatasets()
@@ -116,6 +70,7 @@ export default function DatasetsPage() {
       : dataset.json_url
     if (url && url !== '#') window.open(url, '_blank')
   }
+
 
   const filtered = datasets.filter(d => {
     const matchSearch = search === '' ||
@@ -146,6 +101,7 @@ export default function DatasetsPage() {
             </p>
 
             {/* SEARCH */}
+            
             <div className="relative max-w-xl">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
@@ -156,9 +112,12 @@ export default function DatasetsPage() {
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-white text-sm outline-none shadow-sm"
                 style={{ color: 'var(--text)' }}
               />
+              
             </div>
           </motion.div>
+          
         </div>
+        
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -319,4 +278,5 @@ export default function DatasetsPage() {
       </div>
     </div>
   )
+  
 }

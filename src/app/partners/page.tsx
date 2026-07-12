@@ -8,11 +8,7 @@ import { ExternalLink, ArrowRight, Handshake } from 'lucide-react'
 
 const partnerTypes = ['All', 'Academic', 'NGO', 'Government', 'Media', 'International']
 
-const demoPartners = [
-  { id: '1', name: 'World Bank Haiti', logo_url: null, website: 'https://worldbank.org', type: 'International', description: 'Key source of economic and development data for Haiti.' },
-  { id: '2', name: 'OCHA Haiti', logo_url: null, website: 'https://unocha.org', type: 'International', description: 'Humanitarian coordination and data on crises in Haiti.' },
-  { id: '3', name: 'IHSI', logo_url: null, website: 'https://ihsi.ht', type: 'Government', description: 'Institut Haïtien de Statistique et d\'Informatique — official statistics body of Haiti.' },
-]
+
 
 export default function PartnersPage() {
   const [partners, setPartners] = useState<any[]>([])
@@ -27,7 +23,7 @@ export default function PartnersPage() {
         .select('*')
         .eq('active', true)
         .order('name', { ascending: true })
-      setPartners(data && data.length > 0 ? data : demoPartners)
+     setPartners(data || [])
       setLoading(false)
     }
     load()
