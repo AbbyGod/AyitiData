@@ -6,12 +6,12 @@ import { motion } from 'framer-motion'
 import { Search, BookOpen } from 'lucide-react'
 
 const CATEGORIES = [
-  'All', 'Finance', 'Health', 'Demography',
+  'All', 'Economy', 'Health', 'Demography',
   'Education', 'Agriculture', 'Politics', 'Environment', 'Other'
 ]
 
 const categoryColors: Record<string, { bg: string; color: string }> = {
-  Finance: { bg: '#E6F5ED', color: '#1E8A4C' },
+  Economy: { bg: '#E6F5ED', color: '#1E8A4C' },
   Health: { bg: '#FDE8E8', color: '#C0392B' },
   Demography: { bg: '#E8F0FC', color: '#1A56A0' },
   Education: { bg: '#FFF3E0', color: '#E8A020' },
