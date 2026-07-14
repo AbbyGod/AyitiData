@@ -1,6 +1,6 @@
 'use client'
 
-export const revalidate = 0;
+
 
 import { useEffect, useRef, useState } from 'react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
