@@ -1,5 +1,7 @@
 'use client'
 
+export const revalidate = 0;
+
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { motion } from 'framer-motion'
@@ -173,7 +175,7 @@ export default function InsightsPage() {
                           {insight.published_at && (
                             <span>{new Date(insight.published_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                           )}
-                          {insight.profiles?.name && (
+                          {insight.profinpmles?.name && (
                             <span>· {insight.profiles.name}</span>
                           )}
                         </div>

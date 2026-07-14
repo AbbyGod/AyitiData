@@ -1,9 +1,12 @@
 'use client'
 
+export const revalidate = 0;
+
 import { useEffect, useRef, useState } from 'react'
 import { useLanguage } from '@/lib/i18n/LanguageContext'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { createClient } from '@/lib/supabase/client'
 import {
   ArrowRight,
   Database,
@@ -86,20 +89,19 @@ export default function HomePage() {
   // 2. Fetch data from Supabase when the component loads
   useEffect(() => {
     async function fetchRealData() {
-      // TODO: Add your Supabase queries here later!
-      
-      /* Example:
       const supabase = createClient()
       
+      // Fetch datasets
       const { data: datasets } = await supabase.from('datasets').select('*').limit(3)
       if (datasets) setFeaturedDatasets(datasets)
       
+      // Fetch reports
       const { data: reports } = await supabase.from('reports').select('*').limit(3)
       if (reports) setFeaturedReports(reports)
       
-      const { data: insights } = await supabase.from('insights').select('*').limit(3)
+      // Fetch insights
+      const { data: insights } = await supabase.from('articles').select('*').eq('status', 'published').limit(3)
       if (insights) setLatestInsights(insights)
-      */
     }
 
     fetchRealData()
