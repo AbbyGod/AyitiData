@@ -5,8 +5,7 @@ import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { 
   Mail,
-  MapPin,
-  ExternalLink
+  MapPin
 } from 'lucide-react'
 
 import {
@@ -16,8 +15,6 @@ import {
   FaFacebook
 } from 'react-icons/fa6'
 
-
-
 const socialLinks = [
   { href: 'https://twitter.com/ayitidata', icon: FaXTwitter, label: 'Twitter' },
   { href: 'https://linkedin.com/company/ayitidata', icon: FaLinkedin, label: 'LinkedIn' },
@@ -26,6 +23,7 @@ const socialLinks = [
 ]
 
 function NewsletterForm() {
+  const { t } = useLanguage()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
@@ -49,7 +47,7 @@ function NewsletterForm() {
   if (status === 'success') {
     return (
       <p className="text-sm font-semibold" style={{ color: '#6EE7B7' }}>
-        ✓ You're subscribed!
+        ✓ {t('loading') === 'Chargement...' ? 'Abonné !' : t('loading') === 'Chajman...' ? 'Ou abòne !' : t('loading') === 'Cargando...' ? '¡Suscrito!' : "You're subscribed!"}
       </p>
     )
   }
@@ -60,7 +58,7 @@ function NewsletterForm() {
         type="email"
         value={email}
         onChange={e => setEmail(e.target.value)}
-        placeholder="your@email.com"
+        placeholder={t('newsletter_placeholder')}
         required
         className="px-3 py-2 text-sm rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/40 outline-none focus:border-white/40 transition-colors"
       />
@@ -70,7 +68,7 @@ function NewsletterForm() {
         className="px-3 py-2 text-sm font-semibold rounded-lg text-white transition-opacity hover:opacity-90 disabled:opacity-60"
         style={{ background: 'var(--accent)' }}
       >
-        {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+        {status === 'loading' ? t('loading') : t('newsletter_btn')}
       </button>
       {status === 'error' && (
         <p className="text-xs" style={{ color: '#FCA5A5' }}>Something went wrong. Try again.</p>
@@ -79,9 +77,9 @@ function NewsletterForm() {
   )
 }
 
-
 export default function Footer() {
   const { t } = useLanguage()
+  
   const footerLinks = {
     explore: [
       { href: '/datasets', label: t('nav_datasets') },
@@ -109,6 +107,7 @@ export default function Footer() {
       { href: '/cookies', label: t('footer_cookies') },
     ],
   }
+
   return (
     <footer style={{ background: 'var(--navy)' }} className="text-white">
 
@@ -130,41 +129,33 @@ export default function Footer() {
                 Ayiti Data
               </span>
             </Link>
-            <p>{t('footer_tagline')}</p>
+            <p className="mb-6 text-sm text-white/80">{t('footer_tagline')}</p>
 
             {/* SOCIAL LINKS */}
-            <div className="flex gap-3">
-           {socialLinks.map((social) => (
-  <a
-    key={social.label}
-    href={social.href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-colors"
-    aria-label={social.label}
-  >
-    <social.icon className="w-4 h-4" />
-  </a>
-))}
+            <div className="flex gap-3 mb-6">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-colors"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
 
             {/* CONTACT INFO */}
-           {/* CONTACT INFO */}
-<div className="mt-6 flex flex-col gap-2">
-
-  <a
-    href="mailto:hello@ayitidata.org"
-    className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
-  >
-    <Mail className="w-4 h-4" />
-    hello@ayitidata.org
-  </a>
-
-  <div className="flex items-center gap-2 text-sm text-white/60">
-    <MapPin className="w-4 h-4" />
-    Port-au-Prince, Haiti
-  </div>
-
+            <div className="flex flex-col gap-2">
+              <a
+                href="mailto:hello@ayitidata.org"
+                className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
+              >
+                <Mail className="w-4 h-4" />
+                hello@ayitidata.org
+              </a>
 
               <div className="flex items-center gap-2 text-sm text-white/60">
                 <MapPin className="w-4 h-4" />
@@ -176,8 +167,8 @@ export default function Footer() {
           {/* EXPLORE */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-        About
-      </h4>
+              {t('footer_explore')}
+            </h4>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.explore.map((link) => (
                 <li key={link.label}>
@@ -195,8 +186,8 @@ export default function Footer() {
           {/* ABOUT */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-        {t('footer_about')}
-      </h4>
+              {t('footer_about')}
+            </h4>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.about.map((link) => (
                 <li key={link.label}>
@@ -214,8 +205,8 @@ export default function Footer() {
           {/* CONTRIBUTE */}
           <div>
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-        {t('footer_contribute')}
-      </h4>
+              {t('footer_contribute')}
+            </h4>
             <ul className="flex flex-col gap-2.5">
               {footerLinks.contribute.map((link) => (
                 <li key={link.label}>
@@ -232,26 +223,13 @@ export default function Footer() {
 
           {/* NEWSLETTER */}
           <div>
-          <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-          {t('stay_updated')}
-        </h4>
-        <p className="text-sm text-white/60 mb-4">
-          {t('stay_updated_desc')}
-        </p>
-         <form className="flex flex-col gap-2">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="px-3 py-2 text-sm rounded-lg bg-white/10 border border-white/20 text-white placeholder:text-white/40 outline-none focus:border-white/40 transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-3 py-2 text-sm font-semibold rounded-lg text-white transition-opacity hover:opacity-90"
-                style={{ background: 'var(--accent)' }}
-              >
-                Subscribe
-              </button>
-            </form>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
+              {t('stay_updated')}
+            </h4>
+            <p className="text-sm text-white/60 mb-4">
+              {t('stay_updated_desc')}
+            </p>
+            <NewsletterForm />
           </div>
 
         </div>
@@ -272,7 +250,7 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-         <p>{t('footer_made')}</p>
+          <p className="text-sm text-white/40">{t('footer_made')}</p>
         </div>
       </div>
 

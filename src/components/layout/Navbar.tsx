@@ -148,7 +148,7 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* RIGHT SIDE */}
+        {/* RIGHT SIDE */}
           <div className="hidden lg:flex items-center gap-2">
 
             {/* SEARCH */}
@@ -160,7 +160,12 @@ export default function Navbar() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search datasets, insights…"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && searchQuery.trim()) {
+                        window.location.href = `/datasets?search=${encodeURIComponent(searchQuery.trim())}`
+                      }
+                    }}
+                    placeholder={t('search_placeholder')}
                     className="w-64 px-4 py-1.5 text-sm border border-gray-200 rounded-lg outline-none focus:border-blue-400"
                   />
                   <button onClick={() => { setSearchOpen(false); setSearchQuery('') }}>
@@ -177,27 +182,45 @@ export default function Navbar() {
               )}
             </div>
 
-         {/* LANGUAGE TOGGLE */}
-            <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
-              {(['fr', 'en', 'ht', 'es'] as Language[]).map((code) => (
-                <button
-                  key={code}
-                  onClick={() => setLang(code)}
-                  className={cn(
-                    'px-2.5 py-1 text-xs font-semibold transition-colors uppercase',
-                    lang === code
-                      ? 'text-white'
-                      : 'text-gray-500 hover:text-gray-900'
-                  )}
-                  style={lang === code ? { background: 'var(--navy)' } : {}}
-                >
-                  {code === 'ht' ? 'KR' : code.toUpperCase()}
-                </button>
-              ))}
+            {/* LANGUAGE TOGGLE — dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setActiveDropdown(activeDropdown === 'lang' ? null : 'lang')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold border border-gray-200 hover:bg-gray-50 transition-colors"
+                style={{ color: 'var(--navy)' }}
+              >
+                <Globe className="w-3.5 h-3.5" />
+                {lang === 'ht' ? 'Kreyòl' : lang === 'fr' ? 'Français' : lang === 'es' ? 'Español' : 'English'}
+                <ChevronDown className={cn('w-3 h-3 transition-transform', activeDropdown === 'lang' && 'rotate-180')} />
+              </button>
+              {activeDropdown === 'lang' && (
+                <div className="absolute top-full right-0 mt-1 w-36 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
+                  {([
+                    { code: 'fr', label: 'Français' },
+                    { code: 'en', label: 'English' },
+                    { code: 'ht', label: 'Kreyòl' },
+                    { code: 'es', label: 'Español' },
+                  ] as { code: Language; label: string }[]).map((l) => (
+                    <button
+                      key={l.code}
+                      onClick={() => { setLang(l.code); setActiveDropdown(null) }}
+                      className={cn(
+                        'w-full text-left px-4 py-2 text-sm transition-colors',
+                        lang === l.code
+                          ? 'font-semibold'
+                          : 'text-gray-600 hover:bg-gray-50'
+                      )}
+                      style={lang === l.code ? { color: 'var(--navy)', background: 'var(--light)' } : {}}
+                    >
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* SUPPORT US */}
-          <Link
+            <Link
               href="/support-us"
               className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90"
               style={{ background: 'var(--accent)' }}
@@ -205,12 +228,13 @@ export default function Navbar() {
               <HandHeart className="w-3.5 h-3.5" />
               {t('nav_support')}
             </Link>
+          </div>
+          </div>
+
             {/* LOGIN */}
           
           {/*Will add login later, for now I will keep it like this  */}
-
-          </div>
-
+         
           {/* MOBILE MENU BUTTON */}
           <button
             className="lg:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-50"
@@ -220,7 +244,7 @@ export default function Navbar() {
           </button>
 
         </div>
-      </div>
+     
 
       {/* MOBILE MENU */}
       {mobileOpen && (

@@ -28,15 +28,6 @@ const emojis: Record<string, string> = {
   Politics: '🏛️', Other: '📊',
 }
 
-const demoInsights = [
-  { id: '1', title: 'Why school enrollment is decreasing in rural Haiti?', summary: 'An analysis of education data between 2018 and 2023, looking at access, distance and poverty.', category: 'Education', slug: 'school-enrollment-rural-haiti', reading_time: 8, view_count: 3420, published_at: '2024-05-10T00:00:00Z' },
-  { id: '2', title: 'Inflation trends in Haiti: What the data shows', summary: 'A look at inflation evolution since 2010 and its impact on household purchasing power.', category: 'Economy', slug: 'inflation-trends-haiti', reading_time: 6, view_count: 5100, published_at: '2024-05-03T00:00:00Z' },
-  { id: '3', title: 'Population growth by department (2020–2024)', summary: 'Where is the population growing faster in Haiti? A department-level breakdown.', category: 'Population', slug: 'population-growth-department', reading_time: 5, view_count: 2890, published_at: '2024-04-28T00:00:00Z' },
-  { id: '4', title: 'Health infrastructure gaps: Which departments are most underserved?', summary: 'Mapping hospital density and doctor-to-population ratios across Haiti\'s 10 departments.', category: 'Health', slug: 'health-infrastructure-gaps', reading_time: 7, view_count: 1940, published_at: '2024-04-15T00:00:00Z' },
-  { id: '5', title: 'Food insecurity and crop yields: A 10-year view', summary: 'How rainfall variability and market access have shaped food security in rural Haiti.', category: 'Agriculture', slug: 'food-insecurity-crop-yields', reading_time: 9, view_count: 1230, published_at: '2024-04-05T00:00:00Z' },
-  { id: '6', title: 'Internal displacement in Haiti: 2018–2024', summary: 'A data portrait of Haiti\'s internally displaced populations — who they are and where they\'re from.', category: 'Population', slug: 'internal-displacement-haiti', reading_time: 6, view_count: 2100, published_at: '2024-03-22T00:00:00Z' },
-]
-
 export default function InsightsPage() {
   const [insights, setInsights] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -51,7 +42,9 @@ export default function InsightsPage() {
         .select('*, profiles(name)')
         .eq('status', 'published')
         .order('published_at', { ascending: false })
-      setInsights(data && data.length > 0 ? data : demoInsights)
+      
+      // Now strictly sets the fetched data, defaulting to an empty array if nothing is found
+      setInsights(data || [])
       setLoading(false)
     }
     load()

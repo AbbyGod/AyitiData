@@ -21,21 +21,6 @@ const categoryColors: Record<string, { bg: string; color: string }> = {
   Other: { bg: '#F4F7FB', color: '#6B7A90' },
 }
 
-const demoTerms = [
-  { id: '1', term: 'GDP (Gross Domestic Product)', definition: 'The total monetary value of all goods and services produced within a country\'s borders in a specific time period. It is the most common measure of an economy\'s size and health.', category: 'Finance' },
-  { id: '2', term: 'Inflation', definition: 'The rate at which the general level of prices for goods and services rises over time, reducing purchasing power. In Haiti, inflation is measured monthly by IHSI using the Consumer Price Index (CPI).', category: 'Finance' },
-  { id: '3', term: 'Literacy Rate', definition: 'The percentage of people aged 15 and above who can read and write. Haiti\'s adult literacy rate is approximately 61%, one of the lowest in the Western Hemisphere.', category: 'Education' },
-  { id: '4', term: 'IDPs (Internally Displaced Persons)', definition: 'People who have been forced to leave their homes but remain within their country\'s borders. In Haiti, displacement is primarily caused by gang violence, natural disasters, and political instability.', category: 'Demography' },
-  { id: '5', term: 'Maternal Mortality Rate', definition: 'The number of maternal deaths per 100,000 live births. It reflects the quality of healthcare available to women during pregnancy and childbirth. Haiti has one of the highest rates in the Americas.', category: 'Health' },
-  { id: '6', term: 'Food Insecurity', definition: 'A situation where people lack reliable access to sufficient, safe, and nutritious food. The IPC (Integrated Food Security Phase Classification) scale is used to measure severity from 1 (minimal) to 5 (famine).', category: 'Agriculture' },
-  { id: '7', term: 'Remittances', definition: 'Money sent by Haitian citizens living abroad to their families in Haiti. Remittances represent approximately 37% of Haiti\'s GDP, making them one of the country\'s largest sources of income.', category: 'Finance' },
-  { id: '8', term: 'Department', definition: 'Haiti\'s primary administrative division, equivalent to a province or state. Haiti has 10 departments: Artibonite, Centre, Grand\'Anse, Nippes, Nord, Nord-Est, Nord-Ouest, Ouest, Sud, and Sud-Est.', category: 'Demography' },
-  { id: '9', term: 'IMF (International Monetary Fund)', definition: 'An international organization that provides financial assistance and policy advice to member countries. The IMF regularly publishes economic assessments of Haiti and provides budget support.', category: 'Finance' },
-  { id: '10', term: 'Cholera', definition: 'An acute diarrheal disease caused by the bacterium Vibrio cholerae. Haiti experienced a major cholera outbreak starting in 2010, which killed over 10,000 people and infected nearly 820,000.', category: 'Health' },
-  { id: '11', term: 'Enrollment Rate', definition: 'The percentage of children of school-going age who are enrolled in school. Haiti distinguishes between gross enrollment rate (total students/school-age population) and net enrollment rate (only school-age students enrolled).', category: 'Education' },
-  { id: '12', term: 'Gini Coefficient', definition: 'A measure of income inequality within a country, ranging from 0 (perfect equality) to 1 (perfect inequality). A higher value indicates greater inequality. Haiti has one of the highest Gini coefficients in Latin America and the Caribbean.', category: 'Finance' },
-]
-
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 
 export default function GlossaryPage() {
@@ -52,7 +37,9 @@ export default function GlossaryPage() {
         .from('glossary')
         .select('*')
         .order('term', { ascending: true })
-      setTerms(data && data.length > 0 ? data : demoTerms)
+      
+      // Now strictly sets the fetched data, defaulting to an empty array if nothing is found
+      setTerms(data || [])
       setLoading(false)
     }
     load()
@@ -202,7 +189,7 @@ export default function GlossaryPage() {
                       <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
                     </div>
                     <div className="flex flex-col gap-3">
-                      {grouped[l].map((term, i) => {
+                      {grouped[l].map((term: any, i: number) => {
                         const cat = categoryColors[term.category] || categoryColors.Other
                         return (
                           <motion.div key={term.id}

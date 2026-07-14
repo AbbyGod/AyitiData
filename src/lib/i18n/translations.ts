@@ -76,6 +76,15 @@ export const translations = {
     footer_legal: 'Legal',
     footer_rights: 'All rights reserved.',
     footer_made: 'Made with ❤️ for Haiti',
+    footer_terms: 'Terms of Service',
+    footer_privacy: 'Privacy Policy',
+    footer_cookies: 'Cookie Policy',
+    footer_map: 'Data Map',
+    footer_request: 'Request a Dataset',
+    footer_contact: 'Contact Us',
+    footer_newsletter: 'Newsletter',
+    stay_updated: 'Stay Updated',
+    stay_updated_desc: 'Get notified when new datasets and insights are published.',
 
     // COMMON
     loading: 'Loading...',
@@ -166,6 +175,15 @@ export const translations = {
     footer_legal: 'Légal',
     footer_rights: 'Tous droits réservés.',
     footer_made: 'Fait avec ❤️ pour Haïti',
+    footer_terms: 'Conditions d\'utilisation',
+    footer_privacy: 'Politique de confidentialité',
+    footer_cookies: 'Politique des cookies',
+    footer_map: 'Carte des données',
+    footer_request: 'Demander un jeu de données',
+    footer_contact: 'Nous contacter',
+    footer_newsletter: 'Newsletter',
+    stay_updated: 'Restez informé',
+    stay_updated_desc: 'Soyez notifié lors de la publication de nouveaux jeux de données et analyses.',
 
     // COMMON
     loading: 'Chargement...',
@@ -256,6 +274,15 @@ export const translations = {
     footer_legal: 'Legal',
     footer_rights: 'Tout dwa rezève.',
     footer_made: 'Fèt ak ❤️ pou Ayiti',
+    footer_terms: 'Kondisyon sèvis',
+    footer_privacy: 'Politik konfidansyalite',
+    footer_cookies: 'Politik cookies',
+    footer_map: 'Kat done yo',
+    footer_request: 'Mande yon done',
+    footer_contact: 'Kontakte nou',
+    footer_newsletter: 'Bilten',
+    stay_updated: 'Rete enfòme',
+    stay_updated_desc: 'Resevwa notifikasyon lè nouvo done ak analiz pibliye.',
 
     // COMMON
     loading: 'Chajman...',
@@ -346,6 +373,15 @@ export const translations = {
     footer_legal: 'Legal',
     footer_rights: 'Todos los derechos reservados.',
     footer_made: 'Hecho con ❤️ para Haití',
+    footer_terms: 'Términos de servicio',
+    footer_privacy: 'Política de privacidad',
+    footer_cookies: 'Política de cookies',
+    footer_map: 'Mapa de datos',
+    footer_request: 'Solicitar un conjunto de datos',
+    footer_contact: 'Contáctanos',
+    footer_newsletter: 'Boletín',
+    stay_updated: 'Mantente informado',
+    stay_updated_desc: 'Recibe notificaciones cuando se publiquen nuevos datos y análisis.',
 
     // COMMON
     loading: 'Cargando...',
@@ -359,6 +395,7 @@ export const translations = {
     downloads: 'descargas',
   },
 }
+
 
 export type Language = 'en' | 'fr' | 'ht' | 'es'
 export type TranslationKey = keyof typeof translations.en

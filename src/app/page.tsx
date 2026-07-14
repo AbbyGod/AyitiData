@@ -18,6 +18,13 @@ import {
 } from 'lucide-react'
 
 // ═══════════════════════════════════════════
+// TYPES FOR SUPABASE DATA
+// ═══════════════════════════════════════════
+type Dataset = { title: string; category: string; source: string; updated: string; downloads: number; href: string }
+type Report = { title: string; organization: string; category: string; year: number }
+type Insight = { title: string; category: string; date: string; readingTime: number; views: number; emoji: string; bg: string; href: string }
+
+// ═══════════════════════════════════════════
 // ANIMATED COUNTER
 // ═══════════════════════════════════════════
 function AnimatedCounter({ target, suffix = '', prefix = '' }: {
@@ -59,38 +66,6 @@ function AnimatedCounter({ target, suffix = '', prefix = '' }: {
   return <span ref={ref}>{prefix}{count.toLocaleString()}{suffix}</span>
 }
 
-// ═══════════════════════════════════════════
-// KEY HAITI STATS
-// ═══════════════════════════════════════════
-
-
-// ═══════════════════════════════════════════
-// FEATURED DATASETS
-// ═══════════════════════════════════════════
-const featuredDatasets = [
-  { title: 'Haiti Population 2020–2024', category: 'Population', source: 'World Bank', updated: 'May 12, 2024', downloads: 1240, href: '/datasets' },
-  { title: 'Education Statistics 2016–2023', category: 'Education', source: 'MENFP', updated: 'April 30, 2024', downloads: 890, href: '/datasets' },
-  { title: 'Inflation Data 2010–2024', category: 'Economy', source: 'IHSI', updated: 'May 05, 2024', downloads: 2100, href: '/datasets' },
-]
-
-// ═══════════════════════════════════════════
-// FEATURED REPORTS
-// ═══════════════════════════════════════════
-const featuredReports = [
-  { title: 'Haiti Economic Update 2024', organization: 'World Bank', category: 'Economy', year: 2024 },
-  { title: 'Haiti Humanitarian Response Plan 2024', organization: 'OCHA', category: 'Humanitarian', year: 2024 },
-  { title: 'Education Sector Analysis Haiti', organization: 'UNESCO', category: 'Education', year: 2023 },
-]
-
-// ═══════════════════════════════════════════
-// LATEST INSIGHTS
-// ═══════════════════════════════════════════
-const latestInsights = [
-  { title: 'Why school enrollment is decreasing in rural Haiti?', category: 'Education', date: 'May 10, 2024', readingTime: 8, views: 3420, emoji: '📉', bg: '#FDE8E8', href: '/insights' },
-  { title: 'Inflation trends in Haiti: What the data shows', category: 'Economy', date: 'May 3, 2024', readingTime: 6, views: 5100, emoji: '📈', bg: '#E8F0FC', href: '/insights' },
-  { title: 'Population growth by department (2020–2024)', category: 'Population', date: 'April 28, 2024', readingTime: 5, views: 2890, emoji: '🗺️', bg: '#E6F5ED', href: '/insights' },
-]
-
 const categoryColors: Record<string, string> = {
   Population: '#1A56A0',
   Education: '#E8A020',
@@ -102,6 +77,33 @@ const categoryColors: Record<string, string> = {
 
 export default function HomePage() {
   const { t } = useLanguage()
+
+  // 1. Initialize empty state arrays for your data
+  const [featuredDatasets, setFeaturedDatasets] = useState<Dataset[]>([])
+  const [featuredReports, setFeaturedReports] = useState<Report[]>([])
+  const [latestInsights, setLatestInsights] = useState<Insight[]>([])
+
+  // 2. Fetch data from Supabase when the component loads
+  useEffect(() => {
+    async function fetchRealData() {
+      // TODO: Add your Supabase queries here later!
+      
+      /* Example:
+      const supabase = createClient()
+      
+      const { data: datasets } = await supabase.from('datasets').select('*').limit(3)
+      if (datasets) setFeaturedDatasets(datasets)
+      
+      const { data: reports } = await supabase.from('reports').select('*').limit(3)
+      if (reports) setFeaturedReports(reports)
+      
+      const { data: insights } = await supabase.from('insights').select('*').limit(3)
+      if (insights) setLatestInsights(insights)
+      */
+    }
+
+    fetchRealData()
+  }, [])
 
   const haitiStats = [
     { icon: Users, label: t('stat_population'), value: 12, suffix: 'M+', description: t('stat_population_desc'), color: '#1A56A0', bg: '#E8F0FC' },
@@ -185,9 +187,9 @@ export default function HomePage() {
               <h2 className="font-sora text-2xl font-bold mb-1" style={{ color: 'var(--navy)' }}>{t('insights_title')}</h2>
               <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('insights_desc')}</p>
             </div>
-          <Link href="/resources" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
-  {t('resources_view')} <ArrowRight className="w-3.5 h-3.5" />
-</Link>
+            <Link href="/resources" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
+              {t('resources_view')} <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -304,11 +306,18 @@ export default function HomePage() {
               {t('newsletter_desc')}
             </p>
             <form onSubmit={e => e.preventDefault()} className="flex gap-2 max-w-md mx-auto">
-              <input type="email" placeholder="your@email.com"
-                className="flex-1 px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400 transition-colors" />
-              <button type="submit" className="px-5 py-2.5 text-sm font-semibold text-white rounded-xl transition-opacity hover:opacity-90" style={{ background: 'var(--navy)' }}>
-                Subscribe
-              </button>
+            <input 
+              type="email" 
+              placeholder={t('newsletter_placeholder')}
+              className="flex-1 px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400 transition-colors" 
+            />
+            <button 
+              type="submit" 
+              className="px-5 py-2.5 text-sm font-semibold text-white rounded-xl transition-opacity hover:opacity-90" 
+              style={{ background: 'var(--navy)' }}
+            >
+              {t('newsletter_btn')}
+            </button>
             </form>
           </motion.div>
         </div>
