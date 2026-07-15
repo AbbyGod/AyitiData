@@ -6,6 +6,40 @@ import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { motion } from 'framer-motion'
 import { Search, BookOpen } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
+
+// UI translation dictionary
+const UI_MAP: Record<string, Record<string, string>> = {
+  'Glossary': { en: 'Glossary', fr: 'Glossaire', ht: 'Glosè', es: 'Glosario' },
+  'HeroDesc': { 
+    en: 'Key terms in economy, health, demography, education and more — explained simply so anyone can understand Haiti\'s data.', 
+    fr: 'Termes clés en économie, santé, démographie, éducation et plus — expliqués simplement pour que tout le monde puisse comprendre les données d\'Haïti.', 
+    ht: 'Mo kle nan ekonomi, sante, demografi, edikasyon ak plis ankò — eksplike senp pou tout moun ka konprann done Ayiti yo.', 
+    es: 'Términos clave en economía, salud, demografía, educación y más — explicados de forma sencilla para que cualquiera pueda entender los datos de Haití.' 
+  },
+  'SearchPlaceholder': { en: 'Search terms and definitions...', fr: 'Rechercher des termes et définitions...', ht: 'Chèche mo ak definisyon...', es: 'Buscar términos y definiciones...' },
+  'Category': { en: 'Category', fr: 'Catégorie', ht: 'Kategori', es: 'Categoría' },
+  'Browse A–Z': { en: 'Browse A–Z', fr: 'Parcourir A–Z', ht: 'Navige A-Z', es: 'Explorar A-Z' },
+  'All': { en: 'All', fr: 'Tout', ht: 'Tout', es: 'Todo' },
+  'No terms found': { en: 'No terms found', fr: 'Aucun terme trouvé', ht: 'Pa jwenn okenn mo', es: 'No se encontraron términos' },
+  'Try a different search or category.': { en: 'Try a different search or category.', fr: 'Essayez une autre recherche ou catégorie.', ht: 'Eseye yon lòt rechèch oswa kategori.', es: 'Intente una búsqueda o categoría diferente.' },
+  'Clear filters': { en: 'Clear filters', fr: 'Effacer les filtres', ht: 'Efase filtè yo', es: 'Borrar filtros' },
+  'terms found': { en: 'terms found', fr: 'termes trouvés', ht: 'mo yo jwenn', es: 'términos encontrados' },
+  'term found': { en: 'term found', fr: 'terme trouvé', ht: 'mo jwenn', es: 'término encontrado' }
+}
+
+// Master category dictionary
+const CATEGORY_MAP: Record<string, Record<string, string>> = {
+  'All': { en: 'All', fr: 'Tout', ht: 'Tout', es: 'Todo' },
+  'Economy': { en: 'Economy', fr: 'Économie', ht: 'Ekonomi', es: 'Economía' },
+  'Health': { en: 'Health', fr: 'Santé', ht: 'Sante', es: 'Salud' },
+  'Demography': { en: 'Demography', fr: 'Démographie', ht: 'Demografi', es: 'Demografía' },
+  'Education': { en: 'Education', fr: 'Éducation', ht: 'Edikasyon', es: 'Educación' },
+  'Agriculture': { en: 'Agriculture', fr: 'Agriculture', ht: 'Agrikilti', es: 'Agricultura' },
+  'Politics': { en: 'Politics', fr: 'Politique', ht: 'Politik', es: 'Política' },
+  'Environment': { en: 'Environment', fr: 'Environnement', ht: 'Anviwònman', es: 'Medio Ambiente' },
+  'Other': { en: 'Other', fr: 'Autre', ht: 'Lòt', es: 'Otro' }
+}
 
 const CATEGORIES = [
   'All', 'Economy', 'Health', 'Demography',
@@ -32,20 +66,25 @@ export default function GlossaryPage() {
   const [category, setCategory] = useState('All')
   const [letter, setLetter] = useState('All')
 
+  // Hooked up perfectly to your language context
+  const { lang } = useLanguage();
+  const currentLanguage = lang || 'en';
+
   useEffect(() => {
     async function load() {
+      setLoading(true)
       const supabase = createClient()
       const { data } = await supabase
         .from('glossary')
         .select('*')
+        .eq('language', currentLanguage)
         .order('term', { ascending: true })
       
-      // Now strictly sets the fetched data, defaulting to an empty array if nothing is found
       setTerms(data || [])
       setLoading(false)
     }
     load()
-  }, [])
+  }, [currentLanguage])
 
   const filtered = terms.filter(t => {
     const matchSearch = search === '' ||
@@ -75,10 +114,11 @@ export default function GlossaryPage() {
         <div className="max-w-7xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}>
-            <h1 className="font-sora text-4xl font-bold text-white mb-3">Glossary</h1>
+            <h1 className="font-sora text-4xl font-bold text-white mb-3">
+              {UI_MAP['Glossary']?.[currentLanguage] || 'Glossary'}
+            </h1>
             <p className="text-white/70 text-lg max-w-xl mb-8">
-              Key terms in finance, health, demography, education and more —
-              explained simply so anyone can understand Haiti's data.
+              {UI_MAP['HeroDesc']?.[currentLanguage] || 'Key terms in economy, health, demography, education and more — explained simply so anyone can understand Haiti\'s data.'}
             </p>
             <div className="relative max-w-xl">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -86,7 +126,7 @@ export default function GlossaryPage() {
                 type="text"
                 value={search}
                 onChange={e => { setSearch(e.target.value); setLetter('All') }}
-                placeholder="Search terms and definitions..."
+                placeholder={UI_MAP['SearchPlaceholder']?.[currentLanguage] || 'Search terms and definitions...'}
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-white text-sm outline-none shadow-sm"
                 style={{ color: 'var(--text)' }}
               />
@@ -105,7 +145,7 @@ export default function GlossaryPage() {
               {/* CATEGORY FILTER */}
               <div className="bg-white rounded-2xl border border-gray-100 p-5">
                 <h4 className="font-sora font-bold text-sm mb-3" style={{ color: 'var(--navy)' }}>
-                  Category
+                  {UI_MAP['Category']?.[currentLanguage] || 'Category'}
                 </h4>
                 <div className="flex flex-col gap-1">
                   {CATEGORIES.map(cat => (
@@ -115,7 +155,7 @@ export default function GlossaryPage() {
                         ? { background: 'var(--navy)', color: 'white', fontWeight: 600 }
                         : { color: 'var(--muted)' }
                       }>
-                      {cat}
+                      {CATEGORY_MAP[cat]?.[currentLanguage] || cat}
                     </button>
                   ))}
                 </div>
@@ -124,7 +164,7 @@ export default function GlossaryPage() {
               {/* ALPHABET FILTER */}
               <div className="bg-white rounded-2xl border border-gray-100 p-5">
                 <h4 className="font-sora font-bold text-sm mb-3" style={{ color: 'var(--navy)' }}>
-                  Browse A–Z
+                  {UI_MAP['Browse A–Z']?.[currentLanguage] || 'Browse A–Z'}
                 </h4>
                 <div className="flex flex-wrap gap-1">
                   <button onClick={() => setLetter('All')}
@@ -133,7 +173,7 @@ export default function GlossaryPage() {
                       ? { background: 'var(--navy)', color: 'white' }
                       : { background: 'var(--light)', color: 'var(--muted)' }
                     }>
-                    All
+                    {UI_MAP['All']?.[currentLanguage] || 'All'}
                   </button>
                   {ALPHABET.map(l => (
                     <button key={l} onClick={() => setLetter(l)}
@@ -157,7 +197,9 @@ export default function GlossaryPage() {
           {/* TERMS LIST */}
           <div className="lg:col-span-3">
             <p className="text-sm mb-6" style={{ color: 'var(--muted)' }}>
-              {filtered.length} term{filtered.length !== 1 ? 's' : ''} found
+              {filtered.length} {filtered.length === 1 
+                ? (UI_MAP['term found']?.[currentLanguage] || 'term found') 
+                : (UI_MAP['terms found']?.[currentLanguage] || 'terms found')}
               {search && ` for "${search}"`}
             </p>
 
@@ -169,14 +211,14 @@ export default function GlossaryPage() {
               <div className="bg-white rounded-2xl border border-gray-100 p-16 text-center">
                 <BookOpen className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--muted)' }} />
                 <h3 className="font-sora font-bold text-lg mb-2" style={{ color: 'var(--navy)' }}>
-                  No terms found
+                  {UI_MAP['No terms found']?.[currentLanguage] || 'No terms found'}
                 </h3>
                 <p className="text-sm mb-4" style={{ color: 'var(--muted)' }}>
-                  Try a different search or category.
+                  {UI_MAP['Try a different search or category.']?.[currentLanguage] || 'Try a different search or category.'}
                 </p>
                 <button onClick={() => { setSearch(''); setCategory('All'); setLetter('All') }}
                   className="text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
-                  Clear filters
+                  {UI_MAP['Clear filters']?.[currentLanguage] || 'Clear filters'}
                 </button>
               </div>
             ) : (
@@ -207,7 +249,7 @@ export default function GlossaryPage() {
                               {term.category && (
                                 <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold flex-shrink-0"
                                   style={{ background: cat.bg, color: cat.color }}>
-                                  {term.category}
+                                  {CATEGORY_MAP[term.category]?.[currentLanguage] || term.category}
                                 </span>
                               )}
                             </div>
