@@ -91,17 +91,31 @@ export default function HomePage() {
     async function fetchRealData() {
       const supabase = createClient()
       
-      // Fetch datasets
-      const { data: datasets } = await supabase.from('datasets').select('*').limit(3)
+      // Fetch datasets (Newest first)
+      const { data: datasets } = await supabase
+        .from('datasets')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(3)
       if (datasets) setFeaturedDatasets(datasets)
       
-      // Fetch reports
-      const { data: reports } = await supabase.from('reports').select('*').limit(3)
+      // Fetch reports (Newest first)
+      const { data: reports } = await supabase
+        .from('reports')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(3)
       console.log("🚨 RAW REPORTS DATA:", reports)
       if (reports) setFeaturedReports(reports)
       
-      // Fetch insights
-      const { data: insights } = await supabase.from('articles').select('*').eq('status', 'published').limit(3)
+      // Fetch insights (Newest first)
+      // NOTE: If you meant to fetch from 'glossary', change 'articles' to 'glossary' below!
+      const { data: insights } = await supabase
+        .from('articles')
+        .select('*')
+        .eq('status', 'published')
+        .order('created_at', { ascending: false })
+        .limit(3)
       if (insights) setLatestInsights(insights)
     }
 
