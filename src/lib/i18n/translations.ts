@@ -21,7 +21,7 @@ export const translations = {
     hero_title_1: 'Data about Haiti,',
     hero_title_2: 'open and accessible',
     hero_title_3: 'to all.',
-    hero_desc: 'Ayiti Data collects, cleans, and publishes high-quality data about Haiti — empowering students, researchers, journalists, NGOs, and citizens.',
+    hero_desc: 'Ayiti Data collects, cleans, and publishes high-quality data to empower students, researchers, journalists, NGOs, and citizens in Haiti.',
     hero_btn_datasets: 'Explore Datasets',
     hero_btn_insights: 'Read Insights',
     hero_btn_reports: 'Reports',
@@ -69,7 +69,7 @@ export const translations = {
     newsletter_btn: 'Subscribe',
 
     // FOOTER
-    footer_tagline: 'Making data about Haiti open, clean, and accessible to everyone.',
+    footer_tagline: 'Making reports and data about Haiti open, clean, and accessible to everyone.',
     footer_explore: 'Explore',
     footer_about: 'About',
     footer_contribute: 'Contribute',
@@ -120,7 +120,7 @@ export const translations = {
     hero_title_1: 'Des données sur Haïti,',
     hero_title_2: 'ouvertes et accessibles',
     hero_title_3: 'à tous.',
-    hero_desc: "Ayiti Data collecte, nettoie et publie des données de haute qualité sur Haïti — au service des étudiants, chercheurs, journalistes, ONG et citoyens.",
+    hero_desc: "Ayiti Data collecte, nettoie et publie des données de haute qualité sur Haïti au service des étudiants, chercheurs, journalistes, ONG et citoyens.",
     hero_btn_datasets: 'Explorer les données',
     hero_btn_insights: 'Lire les analyses',
     hero_btn_reports: 'Rapports',
@@ -168,7 +168,7 @@ export const translations = {
     newsletter_btn: "S'abonner",
 
     // FOOTER
-    footer_tagline: "Rendre les données sur Haïti ouvertes, propres et accessibles à tous.",
+    footer_tagline: "Rendre les rapports et les données sur Haïti ouvertes, propres et accessibles à tous.",
     footer_explore: 'Explorer',
     footer_about: 'À propos',
     footer_contribute: 'Contribuer',
@@ -219,7 +219,7 @@ export const translations = {
     hero_title_1: 'Done sou Ayiti,',
     hero_title_2: 'ouvè ak aksesib',
     hero_title_3: 'pou tout moun.',
-    hero_desc: "Ayiti Data kolekte, netwaye epi pibliye done kalite segondè sou Ayiti — pou etidyan, chèchè, jounalis, ONG ak sitwayen.",
+    hero_desc: "Ayiti Data kolekte, netwaye epi pibliye done bon kalite sou Ayiti pou etidyan, chèchè, jounalis, ONG ak sitwayen.",
     hero_btn_datasets: 'Eksplore done yo',
     hero_btn_insights: 'Li analiz yo',
     hero_btn_reports: 'Rapò',
@@ -267,7 +267,7 @@ export const translations = {
     newsletter_btn: "Abònman",
 
     // FOOTER
-    footer_tagline: "Fè done sou Ayiti ouvè, pwòp ak aksesib pou tout moun.",
+    footer_tagline: "Fè rapò ak done sou Ayiti ouvè, pwòp ak aksesib pou tout moun.",
     footer_explore: 'Eksplore',
     footer_about: 'Sou nou',
     footer_contribute: 'Kontribye',

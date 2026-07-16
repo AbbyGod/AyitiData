@@ -12,9 +12,9 @@ import { useLanguage } from '@/lib/i18n/LanguageContext'
 const UI_MAP: Record<string, Record<string, string>> = {
   'Glossary': { en: 'Glossary', fr: 'Glossaire', ht: 'Glosè', es: 'Glosario' },
   'HeroDesc': { 
-    en: 'Key terms in economy, health, demography, education and more — explained simply so anyone can understand Haiti\'s data.', 
-    fr: 'Termes clés en économie, santé, démographie, éducation et plus — expliqués simplement pour que tout le monde puisse comprendre les données d\'Haïti.', 
-    ht: 'Mo kle nan ekonomi, sante, demografi, edikasyon ak plis ankò — eksplike senp pou tout moun ka konprann done Ayiti yo.', 
+    en: 'Key terms in economy, health, demography, education and more, explained simply so anyone can understand Haiti\'s data.', 
+    fr: 'Termes clés en économie, santé, démographie, éducation et plus, expliqués simplement pour que tout le monde puisse comprendre les données d\'Haïti.', 
+    ht: 'Mo kle nan ekonomi, sante, demografi, edikasyon ak plis ankò, tout eksplike byen senp pou tout moun ka konprann done Ayiti yo.', 
     es: 'Términos clave en economía, salud, demografía, educación y más — explicados de forma sencilla para que cualquiera pueda entender los datos de Haití.' 
   },
   'SearchPlaceholder': { en: 'Search terms and definitions...', fr: 'Rechercher des termes et définitions...', ht: 'Chèche mo ak definisyon...', es: 'Buscar términos y definiciones...' },
@@ -36,14 +36,14 @@ const CATEGORY_MAP: Record<string, Record<string, string>> = {
   'Demography': { en: 'Demography', fr: 'Démographie', ht: 'Demografi', es: 'Demografía' },
   'Education': { en: 'Education', fr: 'Éducation', ht: 'Edikasyon', es: 'Educación' },
   'Agriculture': { en: 'Agriculture', fr: 'Agriculture', ht: 'Agrikilti', es: 'Agricultura' },
-  'Politics': { en: 'Politics', fr: 'Politique', ht: 'Politik', es: 'Política' },
-  'Environment': { en: 'Environment', fr: 'Environnement', ht: 'Anviwònman', es: 'Medio Ambiente' },
+  'Humanitarian': { en: 'Humanitarian', fr: 'Humanitaire', ht: 'Èd Imanitè', es: 'Política' },
+  'Politics': { en: 'Politics', fr: 'Politique', ht: 'Politik', es: 'Medio Ambiente' },
   'Other': { en: 'Other', fr: 'Autre', ht: 'Lòt', es: 'Otro' }
 }
 
 const CATEGORIES = [
   'All', 'Economy', 'Health', 'Demography',
-  'Education', 'Agriculture', 'Politics', 'Environment', 'Other'
+  'Education', 'Agriculture', 'Humanitarian', 'Politics', 'Other'
 ]
 
 const categoryColors: Record<string, { bg: string; color: string }> = {
@@ -52,8 +52,8 @@ const categoryColors: Record<string, { bg: string; color: string }> = {
   Demography: { bg: '#E8F0FC', color: '#1A56A0' },
   Education: { bg: '#FFF3E0', color: '#E8A020' },
   Agriculture: { bg: '#F3E8FF', color: '#7C3AED' },
-  Politics: { bg: '#FFF1F2', color: '#E11D48' },
-  Environment: { bg: '#E0F7F4', color: '#0D9488' },
+  Humanitarian: { bg: '#FFF1F2', color: '#E11D48' },
+  Politics: { bg: '#E0F7F4', color: '#0D9488' },
   Other: { bg: '#F4F7FB', color: '#6B7A90' },
 }
 
@@ -118,7 +118,7 @@ export default function GlossaryPage() {
               {UI_MAP['Glossary']?.[currentLanguage] || 'Glossary'}
             </h1>
             <p className="text-white/70 text-lg max-w-xl mb-8">
-              {UI_MAP['HeroDesc']?.[currentLanguage] || 'Key terms in economy, health, demography, education and more — explained simply so anyone can understand Haiti\'s data.'}
+              {UI_MAP['HeroDesc']?.[currentLanguage] || 'Key terms in economy, health, demography, education and more, explained simply so anyone can understand Haiti\'s data.'}
             </p>
             <div className="relative max-w-xl">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />

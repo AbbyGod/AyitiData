@@ -199,7 +199,7 @@ export default function Navbar() {
                     { code: 'fr', label: 'Français' },
                     { code: 'en', label: 'English' },
                     { code: 'ht', label: 'Kreyòl' },
-                    { code: 'es', label: 'Español' },
+                    //{ code: 'es', label: 'Español' },
                   ] as { code: Language; label: string }[]).map((l) => (
                     <button
                       key={l.code}

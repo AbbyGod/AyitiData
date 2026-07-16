@@ -150,11 +150,11 @@ export default function Footer() {
             {/* CONTACT INFO */}
             <div className="flex flex-col gap-2">
               <a
-                href="mailto:hello@ayitidata.org"
+                href="mailto:ayitidata@gmail.com"
                 className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                hello@ayitidata.org
+                ayitidata@gmail.com
               </a>
 
               <div className="flex items-center gap-2 text-sm text-white/60">
