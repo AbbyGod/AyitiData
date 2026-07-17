@@ -6,14 +6,26 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ExternalLink, ArrowRight, Handshake } from 'lucide-react'
 
+// Define your categories
 const partnerTypes = ['All', 'Academic', 'NGO', 'Government', 'Media', 'International']
 
-
+// Translation map for UI display
+const translations: Record<string, { en: string, fr: string, ht: string }> = {
+  'All': { en: 'All', fr: 'Tous', ht: 'Tout' },
+  'Academic': { en: 'Academic', fr: 'Académique', ht: 'Akademik' },
+  'NGO': { en: 'NGO', fr: 'ONG', ht: 'ONG' },
+  'Government': { en: 'Government', fr: 'Gouvernement', ht: 'Gouvènman' },
+  'Media': { en: 'Media', fr: 'Média', ht: 'Medya' },
+  'International': { en: 'International', fr: 'International', ht: 'Entènasyonal' }
+}
 
 export default function PartnersPage() {
   const [partners, setPartners] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [type, setType] = useState('All')
+  
+  // Set your active language here (e.g., 'en', 'fr', or 'ht')
+  const lang = 'fr' 
 
   useEffect(() => {
     async function load() {
@@ -23,13 +35,13 @@ export default function PartnersPage() {
         .select('*')
         .eq('active', true)
         .order('name', { ascending: true })
-     setPartners(data || [])
+      setPartners(data || [])
       setLoading(false)
     }
     load()
   }, [])
 
-  const filtered = type === 'All' ? partners : partners.filter(p => p.type === type)
+  const filtered = type === 'All' ? partners : partners.filter(p => p.category === type)
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--light)' }}>
@@ -40,10 +52,10 @@ export default function PartnersPage() {
         <div className="max-w-5xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}>
-            <h1 className="font-sora text-4xl font-bold text-white mb-3">Our Partners</h1>
+            <h1 className="font-sora text-4xl font-bold text-white mb-3">Nos Partenaires</h1>
             <p className="text-white/70 text-lg max-w-xl mx-auto">
-              Organizations and institutions that support Ayiti Data's mission to make
-              Haiti's data open and accessible.
+              Organisations et institutions qui soutiennent la mission d'Ayiti Data de rendre
+              les données d'Haïti ouvertes et accessibles.
             </p>
           </motion.div>
         </div>
@@ -60,7 +72,7 @@ export default function PartnersPage() {
                 ? { background: 'var(--navy)', color: 'white', borderColor: 'var(--navy)' }
                 : { background: 'white', color: 'var(--muted)', borderColor: 'var(--border)' }
               }>
-              {t}
+              {translations[t][lang as keyof typeof translations['All']]}
             </button>
           ))}
         </div>
@@ -89,10 +101,10 @@ export default function PartnersPage() {
                         {partner.name?.charAt(0)}
                       </div>
                     )}
-                    {partner.type && (
+                    {partner.category && (
                       <span className="text-xs px-2 py-0.5 rounded-full font-semibold"
                         style={{ background: 'var(--light)', color: 'var(--muted)' }}>
-                        {partner.type}
+                        {translations[partner.category][lang as keyof typeof translations['All']]}
                       </span>
                     )}
                   </div>
@@ -109,7 +121,7 @@ export default function PartnersPage() {
                     <a href={partner.website} target="_blank" rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-sm font-semibold hover:underline"
                       style={{ color: 'var(--blue)' }}>
-                      <ExternalLink className="w-3.5 h-3.5" /> Visit Website
+                      <ExternalLink className="w-3.5 h-3.5" /> Visiter le site
                     </a>
                   )}
                 </motion.div>
@@ -130,15 +142,15 @@ export default function PartnersPage() {
                   <div>
                     <h3 className="font-sora font-bold text-base mb-1"
                       style={{ color: 'var(--navy)' }}>
-                      Become a Partner
+                      Devenir Partenaire
                     </h3>
                     <p className="text-sm" style={{ color: 'var(--muted)' }}>
-                      Join our network of organizations supporting open data in Haiti.
+                      Rejoignez notre réseau d'organisations soutenant les données ouvertes en Haïti.
                     </p>
                   </div>
                   <span className="inline-flex items-center gap-1 text-sm font-semibold"
                     style={{ color: 'var(--blue)' }}>
-                    Learn more <ArrowRight className="w-3.5 h-3.5" />
+                    En savoir plus <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </Link>
               </motion.div>
