@@ -49,7 +49,7 @@ const CATEGORIES = ['All', 'Population', 'Education', 'Economy', 'Health', 'Agri
 const categoryColors: Record<string, { bg: string; color: string }> = {
   Population: { bg: '#E8F0FC', color: '#1A56A0' }, Education: { bg: '#FFF3E0', color: '#E8A020' },
   Economy: { bg: '#E6F5ED', color: '#1E8A4C' }, Health: { bg: '#FDE8E8', color: '#C0392B' },
-  Agriculture: { bg: '#F3E8FF', color: '#7C3AED' }, Humanitarian: { bg: '#E0F7F4', color: '#84940d' },
+  Agriculture: { bg: '#F3E8FF', color: '#7C3AED' }, Humanitarian: { bg: '#E0F7F4', color: '#0D9488' },
   Politics: { bg: '#FFF1F2', color: '#E11D48' }, Other: { bg: '#F4F7FB', color: '#6B7A90' }
 }
 
@@ -64,20 +64,26 @@ export default function ReportsPage() {
   const { lang } = useLanguage()
   const currentLanguage = lang || 'en'
 
-  useEffect(() => {
+ useEffect(() => {
     async function loadReports() {
       setLoading(true)
       const supabase = createClient()
-      const { data } = await supabase
+      
+      const { data, error } = await supabase
         .from('reports')
         .select('*')
-        .eq('language', currentLanguage)
+        .eq('language', currentLanguage) // Ensures language isolation
         .order('year', { ascending: false })
+      
+      if (error) {
+        console.error("DEBUG - Reports Page Error:", error)
+      }
+      
       setReports(data || [])
       setLoading(false)
     }
     loadReports()
-  }, [currentLanguage])
+  }, [currentLanguage]) // This ensures the list updates when you click the language toggle
 
   const filtered = reports.filter(r => {
     const matchSearch = search === '' || r.title?.toLowerCase().includes(search.toLowerCase()) || r.organization?.toLowerCase().includes(search.toLowerCase()) || r.description?.toLowerCase().includes(search.toLowerCase())

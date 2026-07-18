@@ -79,48 +79,53 @@ const categoryColors: Record<string, string> = {
 }
 
 export default function HomePage() {
-  const { t } = useLanguage()
+  // 1. Make sure we grab `lang` from the context!
+  const { t, lang } = useLanguage()
+  const currentLanguage = lang || 'en'
 
-  // 1. Initialize empty state arrays for your data
   const [featuredDatasets, setFeaturedDatasets] = useState<Dataset[]>([])
   const [featuredReports, setFeaturedReports] = useState<Report[]>([])
   const [latestInsights, setLatestInsights] = useState<Insight[]>([])
 
-  // 2. Fetch data from Supabase when the component loads
   useEffect(() => {
     async function fetchRealData() {
       const supabase = createClient()
       
-      // Fetch datasets (Newest first)
-      const { data: datasets } = await supabase
+      // 1. Fetch from 'datasets' table
+      const { data: datasets, error: dError } = await supabase
         .from('datasets')
         .select('*')
+        .eq('language', currentLanguage) // Applies language isolation
         .order('created_at', { ascending: false })
         .limit(3)
-      if (datasets) setFeaturedDatasets(datasets)
       
-      // Fetch reports (Newest first)
-      const { data: reports } = await supabase
+      if (dError) console.error("DEBUG - Datasets Error:", dError)
+      if (datasets) setFeaturedDatasets(datasets as Dataset[])
+      
+      // 2. Fetch from 'reports' table
+      const { data: reports, error: rError } = await supabase
         .from('reports')
         .select('*')
+        .eq('language', currentLanguage) // Applies language isolation
         .order('created_at', { ascending: false })
         .limit(3)
-      console.log("🚨 RAW REPORTS DATA:", reports)
-      if (reports) setFeaturedReports(reports)
+        
+      if (rError) console.error("DEBUG - Reports Error:", rError)
+      if (reports) setFeaturedReports(reports as Report[])
       
-      // Fetch insights (Newest first)
-      // NOTE: If you meant to fetch from 'glossary', change 'articles' to 'glossary' below!
+      // 3. Fetch from 'articles' (as before)
       const { data: insights } = await supabase
         .from('articles')
         .select('*')
         .eq('status', 'published')
         .order('created_at', { ascending: false })
         .limit(3)
+        
       if (insights) setLatestInsights(insights)
     }
 
     fetchRealData()
-  }, [])
+  }, [currentLanguage])
 
   const haitiStats = [
     { icon: Users, label: t('stat_population'), value: 12, suffix: 'M+', description: t('stat_population_desc'), color: '#1A56A0', bg: '#E8F0FC' },

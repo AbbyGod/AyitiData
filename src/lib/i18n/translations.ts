@@ -17,7 +17,7 @@ export const translations = {
     nav_support: 'Support Us',
 
     // HOMEPAGE HERO
-    hero_badge: '🇭🇹 Open Data Platform for Haiti',
+    hero_badge: 'Open Data Platform for Haiti',
     hero_title_1: 'Data about Haiti,',
     hero_title_2: 'open and accessible',
     hero_title_3: 'to all.',
@@ -59,11 +59,11 @@ export const translations = {
     // SUPPORT
     support_title: "Help us keep Haiti's data open",
     support_desc: 'Ayiti Data is free for everyone. Your support funds our analysts, technical infrastructure, and community programs.',
-    support_btn: '❤️ Support Ayiti Data',
-    partner_btn: '🤝 Become a Partner',
+    support_btn: 'Support Ayiti Data',
+    partner_btn: 'Become a Partner',
 
     // NEWSLETTER
-    newsletter_title: '📬 Stay in the loop',
+    newsletter_title: 'Stay in the loop',
     newsletter_desc: 'Get notified when new datasets, insights, and reports are published. No spam, unsubscribe anytime.',
     newsletter_placeholder: 'your@email.com',
     newsletter_btn: 'Subscribe',
@@ -75,7 +75,7 @@ export const translations = {
     footer_contribute: 'Contribute',
     footer_legal: 'Legal',
     footer_rights: 'All rights reserved.',
-    footer_made: 'Made with ❤️ for Haiti',
+    footer_made: 'Built with purpose for Haiti',
     footer_terms: 'Terms of Service',
     footer_privacy: 'Privacy Policy',
     footer_cookies: 'Cookie Policy',
@@ -96,6 +96,35 @@ export const translations = {
     source: 'Source',
     updated: 'Updated',
     downloads: 'downloads',
+
+// RESOURCES PAGE
+    res_title: 'Resources',
+    res_subtitle: 'All datasets and official reports in one place — download data or explore documents from trusted sources.',
+    res_search: 'Search by title, source, organization, topic...',
+    res_open_original: 'Open Original',
+    res_view_source: 'View on original source',
+    res_hosted_on: 'This report is hosted on the official website of',
+    res_open_report: 'Open Report',
+    res_found: 'resources found',
+    res_for: 'for',
+    res_legal: 'Reports are linked directly from their original sources. Ayiti Data does not host or reproduce official documents. Datasets marked with download buttons are cleaned versions prepared by our team.',
+    res_try_diff: 'Try a different search or filter.',
+    res_view_report: 'View Report',
+    
+    // FILTERS
+    cat_All: 'All',
+    cat_Population: 'Population',
+    cat_Education: 'Education',
+    cat_Economy: 'Economy',
+    cat_Health: 'Health',
+    cat_Agriculture: 'Agriculture',
+    cat_Humanitarian: 'Humanitarian',
+    cat_Politics: 'Politics',
+    cat_Other: 'Other',
+    type_All: 'All',
+    type_Datasets: 'Datasets',
+    type_Reports: 'Reports',
+
   },
 
   fr: {
@@ -116,7 +145,7 @@ export const translations = {
     nav_support: 'Nous soutenir',
 
     // HOMEPAGE HERO
-    hero_badge: '🇭🇹 Plateforme de données ouvertes pour Haïti',
+    hero_badge: 'Plateforme de données ouvertes pour Haïti',
     hero_title_1: 'Des données sur Haïti,',
     hero_title_2: 'ouvertes et accessibles',
     hero_title_3: 'à tous.',
@@ -158,11 +187,11 @@ export const translations = {
     // SUPPORT
     support_title: "Aidez-nous à garder les données d'Haïti ouvertes",
     support_desc: "Ayiti Data est gratuit pour tous. Votre soutien finance nos analystes, l'infrastructure technique et les programmes communautaires.",
-    support_btn: '❤️ Soutenir Ayiti Data',
-    partner_btn: '🤝 Devenir partenaire',
+    support_btn: 'Soutenir Ayiti Data',
+    partner_btn: 'Devenir partenaire',
 
     // NEWSLETTER
-    newsletter_title: '📬 Restez informé',
+    newsletter_title: 'Restez informé',
     newsletter_desc: "Soyez notifié lors de la publication de nouveaux jeux de données, analyses et rapports. Pas de spam, désabonnement à tout moment.",
     newsletter_placeholder: 'votre@email.com',
     newsletter_btn: "S'abonner",
@@ -174,7 +203,7 @@ export const translations = {
     footer_contribute: 'Contribuer',
     footer_legal: 'Légal',
     footer_rights: 'Tous droits réservés.',
-    footer_made: 'Fait avec ❤️ pour Haïti',
+    footer_made: 'Construit avec détermination pour Haïti',
     footer_terms: 'Conditions d\'utilisation',
     footer_privacy: 'Politique de confidentialité',
     footer_cookies: 'Politique des cookies',
@@ -195,6 +224,37 @@ export const translations = {
     source: 'Source',
     updated: 'Mis à jour',
     downloads: 'téléchargements',
+
+
+// RESOURCES PAGE
+    res_title: 'Ressources',
+    res_subtitle: 'Tous les jeux de données et rapports officiels au même endroit — téléchargez des données ou explorez des documents de sources fiables.',
+    res_search: 'Rechercher par titre, source, organisation, sujet...',
+    res_open_original: 'Ouvrir l\'original',
+    res_view_source: 'Voir sur la source originale',
+    res_hosted_on: 'Ce rapport est hébergé sur le site officiel de',
+    res_open_report: 'Ouvrir le rapport',
+    res_found: 'ressources trouvées',
+    res_for: 'pour',
+    res_legal: 'Les rapports sont liés directement depuis leurs sources originales. Ayiti Data n\'héberge ni ne reproduit de documents officiels. Les jeux de données avec bouton de téléchargement sont des versions nettoyées par notre équipe.',
+    res_try_diff: 'Essayez une recherche ou un filtre différent.',
+    res_view_report: 'Voir le rapport',
+    
+    // FILTERS
+    cat_All: 'Tout',
+    cat_Population: 'Population',
+    cat_Education: 'Éducation',
+    cat_Economy: 'Économie',
+    cat_Health: 'Santé',
+    cat_Agriculture: 'Agriculture',
+    cat_Humanitarian: 'Humanitaire',
+    cat_Politics: 'Politique',
+    cat_Other: 'Autre',
+    type_All: 'Tout',
+    type_Datasets: 'Données',
+    type_Reports: 'Rapports',
+
+
   },
 
   ht: {
@@ -203,7 +263,7 @@ export const translations = {
     nav_datasets: 'Done',
     nav_insights: 'Analiz',
     nav_reports: 'Rapò',
-    nav_glossary: 'Glosè',
+    nav_glossary: 'Leksik',
     nav_about: 'Sou nou',
     nav_mission: 'Misyon',
     nav_team: 'Ekip nou',
@@ -215,7 +275,7 @@ export const translations = {
     nav_support: 'Sipòte nou',
 
     // HOMEPAGE HERO
-    hero_badge: '🇭🇹 Platfòm done ouvè pou Ayiti',
+    hero_badge: 'Platfòm done ouvè pou Ayiti',
     hero_title_1: 'Done sou Ayiti,',
     hero_title_2: 'ouvè ak aksesib',
     hero_title_3: 'pou tout moun.',
@@ -257,11 +317,11 @@ export const translations = {
     // SUPPORT
     support_title: "Ede nou kenbe done Ayiti ouvè",
     support_desc: "Ayiti Data gratis pou tout moun. Sipò ou finanse analis nou yo, enfrastrikti teknik ak pwogram kominotè.",
-    support_btn: '❤️ Sipòte Ayiti Data',
-    partner_btn: '🤝 Vin patnè',
+    support_btn: 'Sipòte Ayiti Data',
+    partner_btn: 'Vin patnè',
 
     // NEWSLETTER
-    newsletter_title: '📬 Rete enfòme',
+    newsletter_title: 'Rete enfòme',
     newsletter_desc: "Resevwa notifikasyon lè nouvo done, analiz ak rapò pibliye. Pa gen spam, dezabòne nenpòt ki lè.",
     newsletter_placeholder: 'ou@imèl.com',
     newsletter_btn: "Abònman",
@@ -273,7 +333,7 @@ export const translations = {
     footer_contribute: 'Kontribye',
     footer_legal: 'Legal',
     footer_rights: 'Tout dwa rezève.',
-    footer_made: 'Fèt ak ❤️ pou Ayiti',
+    footer_made: 'Bati ak detèminasyon pou Ayiti',
     footer_terms: 'Kondisyon sèvis',
     footer_privacy: 'Politik konfidansyalite',
     footer_cookies: 'Politik cookies',
@@ -294,6 +354,35 @@ export const translations = {
     source: 'Sous',
     updated: 'Mete ajou',
     downloads: 'telechajman',
+
+// RESOURCES PAGE
+    res_title: 'Resous',
+    res_subtitle: 'Tout done ak rapò ofisyèl yo yon sèl kote — telechaje done oswa eksplore dokiman ki soti nan sous ou ka fè konfyans.',
+    res_search: 'Chèche pa tit, sous, òganizasyon, sijè...',
+    res_open_original: 'Ouvri Original la',
+    res_view_source: 'Wè sou sous original la',
+    res_hosted_on: 'Rapò sa a jwenn sou sit entènèt ofisyèl',
+    res_open_report: 'Ouvri Rapò a',
+    res_found: 'resous jwenn',
+    res_for: 'pou',
+    res_legal: 'Rapò yo konekte dirèkteman ak sous original yo. Ayiti Data pa anrejistre ni kopye dokiman ofisyèl yo. Done ki gen bouton telechaje yo se vèsyon ekip nou an netwaye.',
+    res_try_diff: 'Eseye yon lòt rechèch oswa yon lòt filtre.',
+    res_view_report: 'Wè Rapò a',
+    
+    // FILTERS
+    cat_All: 'Tout',
+    cat_Population: 'Popilasyon',
+    cat_Education: 'Edikasyon',
+    cat_Economy: 'Ekonomi',
+    cat_Health: 'Sante',
+    cat_Agriculture: 'Agrikilti',
+    cat_Humanitarian: 'Imanitè',
+    cat_Politics: 'Politik',
+    cat_Other: 'Lòt',
+    type_All: 'Tout',
+    type_Datasets: 'Done',
+    type_Reports: 'Rapò',
+
   },
 
   es: {
@@ -314,7 +403,7 @@ export const translations = {
     nav_support: 'Apóyanos',
 
     // HOMEPAGE HERO
-    hero_badge: '🇭🇹 Plataforma de datos abiertos para Haití',
+    hero_badge: 'Plataforma de datos abiertos para Haití',
     hero_title_1: 'Datos sobre Haití,',
     hero_title_2: 'abiertos y accesibles',
     hero_title_3: 'para todos.',
@@ -356,11 +445,11 @@ export const translations = {
     // SUPPORT
     support_title: "Ayúdanos a mantener los datos de Haití abiertos",
     support_desc: "Ayiti Data es gratuito para todos. Tu apoyo financia a nuestros analistas, infraestructura técnica y programas comunitarios.",
-    support_btn: '❤️ Apoyar Ayiti Data',
-    partner_btn: '🤝 Ser socio',
+    support_btn: 'Apoyar Ayiti Data',
+    partner_btn: 'Ser socio',
 
     // NEWSLETTER
-    newsletter_title: '📬 Mantente informado',
+    newsletter_title: 'Mantente informado',
     newsletter_desc: "Recibe notificaciones cuando se publiquen nuevos datos, análisis e informes. Sin spam, cancela cuando quieras.",
     newsletter_placeholder: 'tu@correo.com',
     newsletter_btn: 'Suscribirse',
@@ -372,7 +461,7 @@ export const translations = {
     footer_contribute: 'Contribuir',
     footer_legal: 'Legal',
     footer_rights: 'Todos los derechos reservados.',
-    footer_made: 'Hecho con ❤️ para Haití',
+    footer_made: 'Construido con propósito para Haití',
     footer_terms: 'Términos de servicio',
     footer_privacy: 'Política de privacidad',
     footer_cookies: 'Política de cookies',
@@ -393,9 +482,37 @@ export const translations = {
     source: 'Fuente',
     updated: 'Actualizado',
     downloads: 'descargas',
+
+// RESOURCES PAGE
+    res_title: 'Recursos',
+    res_subtitle: 'Todos los conjuntos de datos e informes oficiales en un solo lugar: descargue datos o explore documentos de fuentes confiables.',
+    res_search: 'Buscar por título, fuente, organización, tema...',
+    res_open_original: 'Abrir Original',
+    res_view_source: 'Ver en la fuente original',
+    res_hosted_on: 'Este informe está alojado en el sitio web oficial de',
+    res_open_report: 'Abrir Informe',
+    res_found: 'recursos encontrados',
+    res_for: 'para',
+    res_legal: 'Los informes están enlazados directamente desde sus fuentes originales. Ayiti Data no aloja ni reproduce documentos oficiales. Los conjuntos de datos con botones de descarga son versiones limpiadas por nuestro equipo.',
+    res_try_diff: 'Prueba con una búsqueda o filtro diferente.',
+    res_view_report: 'Ver Informe',
+    
+    // FILTERS
+    cat_All: 'Todo',
+    cat_Population: 'Población',
+    cat_Education: 'Educación',
+    cat_Economy: 'Economía',
+    cat_Health: 'Salud',
+    cat_Agriculture: 'Agricultura',
+    cat_Humanitarian: 'Humanitario',
+    cat_Politics: 'Política',
+    cat_Other: 'Otro',
+    type_All: 'Todo',
+    type_Datasets: 'Datos',
+    type_Reports: 'Informes',
+
   },
 }
-
 
 export type Language = 'en' | 'fr' | 'ht' | 'es'
 export type TranslationKey = keyof typeof translations.en
