@@ -304,7 +304,7 @@ export default function Navbar() {
             </div>
             </div>
             <Link href="/support-us" className="text-center py-2 rounded-lg text-sm font-semibold text-white" style={{ background: 'var(--accent)' }}>
-              ❤️ Support Us
+              Support Us
             </Link>
   
           </div>

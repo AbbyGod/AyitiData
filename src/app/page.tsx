@@ -18,6 +18,8 @@ import {
   Activity,
   GraduationCap,
   DollarSign,
+  HandHeart,
+  Handshake
 } from 'lucide-react'
 
 // ═══════════════════════════════════════════
@@ -298,7 +300,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SUPPORT BANNER */}
+     {/* SUPPORT BANNER */}
       <section className="py-16" style={{ background: 'linear-gradient(135deg, #0D2B52 0%, #1A56A0 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
@@ -307,11 +309,14 @@ export default function HomePage() {
               {t('support_desc')}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
+              {/* SUPPORT US WITH HEART ICON */}
               <Link href="/support-us" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-0.5" style={{ background: '#E8A020' }}>
-                {t('support_btn')}
+                <HandHeart className="w-4 h-4" /> {t('support_btn')}
               </Link>
+              
+              {/* BECOME A PARTNER WITH HANDSHAKE ICON */}
               <Link href="/work-with-us/partner" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
-                {t('partner_btn')}
+                <Handshake className="w-4 h-4" /> {t('partner_btn')}
               </Link>
             </div>
           </motion.div>
