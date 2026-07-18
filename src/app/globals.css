@@ -74,3 +74,21 @@
     display: none !important;
   }
 }
+
+@media (max-width: 1024px) {
+  /* Shrink the main nav height */
+  nav {
+    height: 50px !important;
+  }
+  
+  /* Hide the search bar or extra icons on mobile if they are cluttering */
+  .search-button, .extra-links {
+    display: none !important;
+  }
+  
+  /* Force the footer to stack items tightly */
+  footer {
+    padding: 20px !important;
+    font-size: 12px !important;
+  }
+}

@@ -245,72 +245,75 @@ export default function Navbar() {
 
         </div>
      
-
-      {/* MOBILE MENU */}
-      {mobileOpen && (
-        <div className="lg:hidden border-t border-gray-100 bg-white px-4 py-4 flex flex-col gap-1">
-          {navLinks.map((link) => {
-            if (link.dropdown) {
-              return (
-                <div key={link.label}>
-                  <p className="px-3 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
-                    {link.label}
-                  </p>
-                  {link.dropdown.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )
-            }
-            return (
-              <Link
-                key={link.href}
-                href={link.href!}
-                className={cn(
-                  'block px-3 py-2 rounded-lg text-sm font-medium',
-                  pathname === link.href
-                    ? 'text-blue-700 bg-blue-50'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                )}
-              >
-                {link.label}
-              </Link>
-            )
-          })}
-          <div className="pt-3 border-t border-gray-100 flex flex-col gap-2">
-            <div className="flex gap-1">
-           <div className="flex gap-1">
-              {(['fr', 'en', 'ht', 'es'] as Language[]).map((code) => (
-                <button
-                  key={code}
-                  onClick={() => setLang(code)}
-                  className={cn(
-                    'flex-1 py-1.5 text-xs font-semibold rounded-lg transition-colors uppercase',
-                    lang === code
-                      ? 'text-white'
-                      : 'text-gray-500 border border-gray-200'
-                  )}
-                  style={lang === code ? { background: 'var(--navy)' } : {}}
+{/* MOBILE MENU */}
+{mobileOpen && (
+  <div className="lg:hidden border-t border-gray-100 bg-white px-4 py-4 flex flex-col gap-2 max-h-[80vh] overflow-y-auto">
+    {navLinks.map((link) => {
+      if (link.dropdown) {
+        return (
+          <div key={link.label} className="py-1">
+            <p className="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+              {link.label}
+            </p>
+            {/* Using a grid to save vertical space */}
+            <div className="grid grid-cols-2 gap-1 mt-1">
+              {link.dropdown.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="px-3 py-2 text-xs text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-md truncate"
                 >
-                  {code === 'ht' ? 'KR' : code.toUpperCase()}
-                </button>
+                  {item.label}
+                </Link>
               ))}
             </div>
-            </div>
-            <Link href="/support-us" className="text-center py-2 rounded-lg text-sm font-semibold text-white" style={{ background: 'var(--accent)' }}>
-              Support Us
-            </Link>
-  
           </div>
-        </div>
-      )}
+        )
+      }
+      return (
+        <Link
+          key={link.href}
+          href={link.href!}
+          className={cn(
+            'block px-3 py-2.5 rounded-lg text-sm font-medium',
+            pathname === link.href
+              ? 'text-blue-700 bg-blue-50'
+              : 'text-gray-700 hover:bg-gray-50'
+          )}
+        >
+          {link.label}
+        </Link>
+      )
+    })}
 
+    {/* LANGUAGE & SUPPORT */}
+    <div className="pt-3 mt-2 border-t border-gray-100 flex flex-col gap-3">
+      <div className="flex gap-2">
+        {(['fr', 'en', 'ht'] as Language[]).map((code) => (
+          <button
+            key={code}
+            onClick={() => setLang(code)}
+            className={cn(
+              'flex-1 py-1.5 text-[10px] font-bold rounded-md transition-colors uppercase',
+              lang === code ? 'text-white' : 'bg-gray-50 text-gray-500'
+            )}
+            style={lang === code ? { background: 'var(--navy)' } : {}}
+          >
+            {code === 'ht' ? 'KR' : code.toUpperCase()}
+          </button>
+        ))}
+      </div>
+      
+      <Link 
+        href="/support-us" 
+        className="text-center py-2.5 rounded-lg text-sm font-semibold text-white shadow-sm" 
+        style={{ background: 'var(--accent)' }}
+      >
+        Support Us
+      </Link>
+    </div>
+  </div>
+)}
       {/* CLOSE DROPDOWN ON OUTSIDE CLICK */}
       {activeDropdown && (
         <div className="fixed inset-0 z-40" onClick={() => setActiveDropdown(null)} />
