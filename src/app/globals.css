@@ -51,3 +51,26 @@
     color: #9CA3AF;
   }
 }
+/* Force the mobile menu to overlay content without changing code logic */
+@media (max-width: 1024px) {
+  /* Prevent the navbar from pushing the page down */
+  .mobile-menu-container {
+    position: absolute !important;
+    top: 100%;
+    width: 100%;
+    z-index: 50;
+  }
+  
+  /* Make all your links easier to tap without changing button code */
+  .mobile-menu-container a {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+}
+
+/* Hide Footer clutter without deleting code */
+@media (max-width: 1024px) {
+  .footer-secondary-links {
+    display: none !important;
+  }
+}
