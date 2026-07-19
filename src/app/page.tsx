@@ -141,46 +141,57 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
 
-      {/* HERO */}
-      <section className="relative overflow-hidden"
+   {/* HERO */}
+      <section className="relative overflow-hidden pt-24 pb-8 lg:pt-32 lg:pb-16"
         style={{ background: 'linear-gradient(135deg, #0D2B52 0%, #1A56A0 100%)' }}>
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-white/5 blur-3xl" />
           <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-blue-300/10 blur-3xl" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white/80 border border-white/20 mb-6">
+              
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white/80 border border-white/20 mb-3">
                 {t('hero_badge')}
               </span>
-              <h1 className="font-sora text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+              
+              <h1 className="font-sora text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-3">
                {t('hero_title_1')}{' '}
                 <span style={{ color: '#E8A020' }}>{t('hero_title_2')}</span>{' '}
                 {t('hero_title_3')}
               </h1>
-              <p className="text-lg text-white/70 max-w-xl mb-10 leading-relaxed">
+              
+              <p className="text-sm sm:text-lg text-white/70 max-w-xl mb-6 leading-relaxed">
                 {t('hero_desc')}
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/datasets" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-0.5" style={{ background: '#E8A020' }}>
+              
+              {/* COMPACT MOBILE BUTTON GRID */}
+              <div className="grid grid-cols-2 sm:flex sm:flex-row gap-3">
+                {/* Primary Button - Full width on mobile */}
+                <Link href="/datasets" className="col-span-2 inline-flex justify-center items-center gap-2 px-5 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-0.5" style={{ background: '#E8A020' }}>
                   <Database className="w-4 h-4" /> {t('hero_btn_datasets')} <ArrowRight className="w-4 h-4" />
                 </Link>
-                <Link href="/insights" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
+                
+                {/* Secondary Buttons - Side-by-side on mobile */}
+                <Link href="/insights" className="inline-flex justify-center items-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-sm text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
                  <BookOpen className="w-4 h-4" /> {t('hero_btn_insights')}
                 </Link>
-                <Link href="/reports" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
+                
+                <Link href="/reports" className="inline-flex justify-center items-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-sm text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
                   <Download className="w-4 h-4" /> Reports
                 </Link>
               </div>
+
             </motion.div>
           </div>
         </div>
       </section>
 
+
       {/* HAITI STATS */}
       <section className="py-16 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="text-center mb-12">
             <h2 className="font-sora text-2xl font-bold mb-2" style={{ color: 'var(--navy)' }}>{t('stats_title')}</h2>
             <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('stats_desc')}</p>
@@ -205,7 +216,7 @@ export default function HomePage() {
 
      {/* LATEST RESOURCES — Datasets + Reports together */}
       <section className="py-16" style={{ background: 'var(--light)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex items-center justify-between mb-10">
             <div>
               <h2 className="font-sora text-2xl font-bold mb-1" style={{ color: 'var(--navy)' }}>{t('resources_title')}</h2>

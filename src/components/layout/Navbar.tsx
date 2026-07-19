@@ -54,26 +54,48 @@ export default function Navbar() {
     },
   ]
 
-
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Close menus when route changes
   useEffect(() => {
     setMobileOpen(false)
     setActiveDropdown(null)
   }, [pathname])
 
+  // Prevent background scrolling when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+  }, [mobileOpen])
+
   return (
     <nav className={cn(
       'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-      scrolled
+      scrolled || mobileOpen
         ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100'
         : 'bg-white border-b border-gray-100'
     )}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      {/* 
+        1. THE CLICK-AWAY BACKDROP
+        This covers the screen behind the floating menu. Clicking it closes the menu.
+      */}
+      {mobileOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 z-40 bg-black/20 backdrop-blur-sm"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      {/* THE MAIN NAVBAR BAR (Stays on top of backdrop due to z-50) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-50 bg-transparent">
         <div className="flex items-center justify-between h-16">
 
           {/* LOGO */}
@@ -190,7 +212,7 @@ export default function Navbar() {
                 style={{ color: 'var(--navy)' }}
               >
                 <Globe className="w-3.5 h-3.5" />
-                {lang === 'ht' ? 'Kreyòl' : lang === 'fr' ? 'Français' : lang === 'es' ? 'Español' : 'English'}
+                {lang === 'ht' ? 'Kreyòl' : lang === 'fr' ? 'Français' : 'English'}
                 <ChevronDown className={cn('w-3 h-3 transition-transform', activeDropdown === 'lang' && 'rotate-180')} />
               </button>
               {activeDropdown === 'lang' && (
@@ -199,7 +221,6 @@ export default function Navbar() {
                     { code: 'fr', label: 'Français' },
                     { code: 'en', label: 'English' },
                     { code: 'ht', label: 'Kreyòl' },
-                    //{ code: 'es', label: 'Español' },
                   ] as { code: Language; label: string }[]).map((l) => (
                     <button
                       key={l.code}
@@ -229,93 +250,113 @@ export default function Navbar() {
               {t('nav_support')}
             </Link>
           </div>
-          </div>
 
-            {/* LOGIN */}
-          
-          {/*Will add login later, for now I will keep it like this  */}
-         
           {/* MOBILE MENU BUTTON */}
           <button
-            className="lg:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-50"
+            className="lg:hidden p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
 
         </div>
-     
-{/* MOBILE MENU */}
-{mobileOpen && (
-  <div className="lg:hidden border-t border-gray-100 bg-white px-4 py-4 flex flex-col gap-2 max-h-[80vh] overflow-y-auto">
-    {navLinks.map((link) => {
-      if (link.dropdown) {
-        return (
-          <div key={link.label} className="py-1">
-            <p className="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-              {link.label}
-            </p>
-            {/* Using a grid to save vertical space */}
-            <div className="grid grid-cols-2 gap-1 mt-1">
-              {link.dropdown.map((item) => (
+      </div>
+
+      {/* 
+        2. THE FLOATING MENU CARD
+        Notice `left-4 right-4` and `rounded-2xl` - this gives it the floating look. 
+        `max-h-[calc(100vh-100px)]` ensures it never hits the absolute bottom of the phone.
+      */}
+      {mobileOpen && (
+        <div className="lg:hidden absolute top-[76px] left-4 right-4 z-50 bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col max-h-[calc(100vh-100px)] overflow-y-auto">
+          
+          <div className="px-4 py-5 flex flex-col gap-2">
+            {navLinks.map((link) => {
+              
+              if (link.dropdown) {
+                const isOpen = activeDropdown === link.label;
+                return (
+                  <div key={link.label} className="flex flex-col border border-gray-100 rounded-xl overflow-hidden shadow-sm">
+                    <button
+                      onClick={() => setActiveDropdown(isOpen ? null : link.label)}
+                      className="flex items-center justify-between px-5 py-4 bg-gray-50 text-gray-800 font-semibold text-left"
+                    >
+                      {link.label}
+                      <ChevronDown className={cn("w-5 h-5 text-gray-500 transition-transform", isOpen && "rotate-180")} />
+                    </button>
+                    
+                    {isOpen && (
+                      <div className="flex flex-col bg-white border-t border-gray-100">
+                        {link.dropdown.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            className="px-5 py-3.5 text-sm font-medium text-gray-600 hover:text-blue-700 hover:bg-blue-50 border-b border-gray-50 last:border-none"
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+
+              return (
                 <Link
-                  key={item.href}
-                  href={item.href}
-                  className="px-3 py-2 text-xs text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-md truncate"
+                  key={link.href}
+                  href={link.href!}
+                  className={cn(
+                    'px-5 py-4 rounded-xl text-sm font-semibold transition-colors shadow-sm',
+                    pathname === link.href
+                      ? 'bg-blue-50 text-blue-700 border border-blue-100'
+                      : 'bg-gray-50 text-gray-800 border border-gray-100 hover:bg-gray-100'
+                  )}
                 >
-                  {item.label}
+                  {link.label}
                 </Link>
+              )
+            })}
+          </div>
+
+          {/* Language & Support Section inside the Card */}
+          <div className="mt-auto bg-gray-50 px-4 py-5 border-t border-gray-200">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 text-center">
+              Language / Langue / Lang
+            </p>
+            <div className="flex gap-2 mb-4">
+              {(['fr', 'en', 'ht'] as Language[]).map((code) => (
+                <button
+                  key={code}
+                  onClick={() => setLang(code)}
+                  className={cn(
+                    'flex-1 py-3 text-sm font-bold rounded-xl transition-colors shadow-sm',
+                    lang === code
+                      ? 'text-white'
+                      : 'text-gray-600 bg-white border border-gray-200 hover:bg-gray-100'
+                  )}
+                  style={lang === code ? { background: 'var(--navy)' } : {}}
+                >
+                  {code === 'ht' ? 'KR' : code.toUpperCase()}
+                </button>
               ))}
             </div>
-          </div>
-        )
-      }
-      return (
-        <Link
-          key={link.href}
-          href={link.href!}
-          className={cn(
-            'block px-3 py-2.5 rounded-lg text-sm font-medium',
-            pathname === link.href
-              ? 'text-blue-700 bg-blue-50'
-              : 'text-gray-700 hover:bg-gray-50'
-          )}
-        >
-          {link.label}
-        </Link>
-      )
-    })}
 
-    {/* LANGUAGE & SUPPORT */}
-    <div className="pt-3 mt-2 border-t border-gray-100 flex flex-col gap-3">
-      <div className="flex gap-2">
-        {(['fr', 'en', 'ht'] as Language[]).map((code) => (
-          <button
-            key={code}
-            onClick={() => setLang(code)}
-            className={cn(
-              'flex-1 py-1.5 text-[10px] font-bold rounded-md transition-colors uppercase',
-              lang === code ? 'text-white' : 'bg-gray-50 text-gray-500'
-            )}
-            style={lang === code ? { background: 'var(--navy)' } : {}}
-          >
-            {code === 'ht' ? 'KR' : code.toUpperCase()}
-          </button>
-        ))}
-      </div>
-      
-      <Link 
-        href="/support-us" 
-        className="text-center py-2.5 rounded-lg text-sm font-semibold text-white shadow-sm" 
-        style={{ background: 'var(--accent)' }}
-      >
-        Support Us
-      </Link>
-    </div>
-  </div>
-)}
-      {/* CLOSE DROPDOWN ON OUTSIDE CLICK */}
-      {activeDropdown && (
+            <Link 
+              href="/support-us" 
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-bold text-white shadow-md active:scale-[0.98] transition-transform" 
+              style={{ background: 'var(--accent)' }}
+            >
+              <HandHeart className="w-5 h-5" />
+              {t('nav_support')}
+            </Link>
+          </div>
+
+        </div>
+      )}
+
+      {/* CLOSE DESKTOP DROPDOWN ON OUTSIDE CLICK */}
+      {activeDropdown && !mobileOpen && (
         <div className="fixed inset-0 z-40" onClick={() => setActiveDropdown(null)} />
       )}
     </nav>
