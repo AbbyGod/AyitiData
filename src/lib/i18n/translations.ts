@@ -125,6 +125,11 @@ export const translations = {
     type_Datasets: 'Datasets',
     type_Reports: 'Reports',
 
+    datasets_title: "Latest Datasets",
+    datasets_view: "View all Datasets",
+    reports_title: "Latest Reports",
+    reports_view: "View all Reports",
+
   },
 
   fr: {
@@ -254,6 +259,11 @@ export const translations = {
     type_Datasets: 'Données',
     type_Reports: 'Rapports',
 
+    datasets_title: "Derniers Jeux de Données",
+    datasets_view: "Voir tous les jeux de données",
+    reports_title: "Derniers Rapports",
+    reports_view: "Voir tous les rapports",
+
 
   },
 
@@ -382,6 +392,11 @@ export const translations = {
     type_All: 'Tout',
     type_Datasets: 'Done',
     type_Reports: 'Rapò',
+
+    datasets_title: "Dènye Done yo",
+    datasets_view: "Wè tout done yo",
+    reports_title: "Dènye Rapò yo",
+    reports_view: "Wè tout rapò yo",
 
   },
 
@@ -513,6 +528,9 @@ export const translations = {
 
   },
 }
+
+
+
 
 export type Language = 'en' | 'fr' | 'ht' | 'es'
 export type TranslationKey = keyof typeof translations.en

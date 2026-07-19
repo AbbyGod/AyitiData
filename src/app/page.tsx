@@ -19,14 +19,16 @@ import {
   GraduationCap,
   DollarSign,
   HandHeart,
-  Handshake
+  Handshake,
+  ExternalLink
 } from 'lucide-react'
 
 // ═══════════════════════════════════════════
 // TYPES FOR SUPABASE DATA
 // ═══════════════════════════════════════════
-type Dataset = { title: string; category: string; source: string; updated: string; downloads: number; href: string }
-type Report = { title: string; organization: string; category: string; year: number }
+// FIXED: Added embed_url and pdf_url to both types
+type Dataset = { title: string; category: string; source: string; updated: string; downloads: number; embed_url?: string; pdf_url?: string; href?: string; file_url?: string; url?: string; link?: string }
+type Report = { title: string; organization: string; category: string; year: number; embed_url?: string; pdf_url?: string; href?: string; file_url?: string; url?: string; link?: string; csv_url?: string }
 type Insight = { title: string; category: string; date: string; readingTime: number; views: number; emoji: string; bg: string; href: string }
 
 // ═══════════════════════════════════════════
@@ -80,54 +82,75 @@ const categoryColors: Record<string, string> = {
   Humanitarian: '#0D9488',
 }
 
+const ITEMS_PER_PAGE = 9;
+
 export default function HomePage() {
-  // 1. Make sure we grab `lang` from the context!
   const { t, lang } = useLanguage()
   const currentLanguage = lang || 'en'
 
   const [featuredDatasets, setFeaturedDatasets] = useState<Dataset[]>([])
+  
+  // Pagination States
   const [featuredReports, setFeaturedReports] = useState<Report[]>([])
-  const [latestInsights, setLatestInsights] = useState<Insight[]>([])
+  const [reportsPage, setReportsPage] = useState(1)
+  const [totalReports, setTotalReports] = useState(0)
 
+  const [latestInsights, setLatestInsights] = useState<Insight[]>([])
+  const [insightsPage, setInsightsPage] = useState(1)
+  const [totalInsights, setTotalInsights] = useState(0)
+
+  const supabase = createClient()
+
+  // 1. Fetch Datasets (Just the latest 3)
   useEffect(() => {
-    async function fetchRealData() {
-      const supabase = createClient()
-      
-      // 1. Fetch from 'datasets' table
-      const { data: datasets, error: dError } = await supabase
+    async function fetchDatasets() {
+      const { data } = await supabase
         .from('datasets')
         .select('*')
-        .eq('language', currentLanguage) // Applies language isolation
+        .eq('language', currentLanguage)
         .order('created_at', { ascending: false })
         .limit(3)
-      
-      if (dError) console.error("DEBUG - Datasets Error:", dError)
-      if (datasets) setFeaturedDatasets(datasets as Dataset[])
-      
-      // 2. Fetch from 'reports' table
-      const { data: reports, error: rError } = await supabase
-        .from('reports')
-        .select('*')
-        .eq('language', currentLanguage) // Applies language isolation
-        .order('created_at', { ascending: false })
-        .limit(3)
-        
-      if (rError) console.error("DEBUG - Reports Error:", rError)
-      if (reports) setFeaturedReports(reports as Report[])
-      
-      // 3. Fetch from 'articles' (as before)
-      const { data: insights } = await supabase
-        .from('articles')
-        .select('*')
-        .eq('status', 'published')
-        .order('created_at', { ascending: false })
-        .limit(3)
-        
-      if (insights) setLatestInsights(insights)
+      if (data) setFeaturedDatasets(data as Dataset[])
     }
-
-    fetchRealData()
+    fetchDatasets()
   }, [currentLanguage])
+
+  // 2. Fetch Reports (Paginated)
+  useEffect(() => {
+    async function fetchReports() {
+      const from = (reportsPage - 1) * ITEMS_PER_PAGE
+      const to = from + ITEMS_PER_PAGE - 1
+      const { data, count } = await supabase
+        .from('reports')
+        .select('*', { count: 'exact' })
+        .eq('language', currentLanguage)
+        .order('created_at', { ascending: false })
+        .range(from, to)
+
+      if (data) setFeaturedReports(data as Report[])
+      if (count !== null) setTotalReports(count)
+    }
+    fetchReports()
+  }, [currentLanguage, reportsPage])
+
+  // 3. Fetch Insights (Paginated)
+  useEffect(() => {
+    async function fetchInsights() {
+      const from = (insightsPage - 1) * ITEMS_PER_PAGE
+      const to = from + ITEMS_PER_PAGE - 1
+      const { data, count } = await supabase
+        .from('articles') // Assuming insights are in the 'articles' table
+        .select('*', { count: 'exact' })
+        .eq('status', 'published')
+        // .eq('language', currentLanguage) // Uncomment if articles have language column
+        .order('created_at', { ascending: false })
+        .range(from, to)
+
+      if (data) setLatestInsights(data as Insight[])
+      if (count !== null) setTotalInsights(count)
+    }
+    fetchInsights()
+  }, [currentLanguage, insightsPage])
 
   const haitiStats = [
     { icon: Users, label: t('stat_population'), value: 12, suffix: 'M+', description: t('stat_population_desc'), color: '#1A56A0', bg: '#E8F0FC' },
@@ -138,10 +161,35 @@ export default function HomePage() {
     { icon: TrendingUp, label: t('stat_inflation'), value: 28, suffix: '%', description: t('stat_inflation_desc'), color: '#0D2B52', bg: '#E8F0FC' },
   ]
 
+  // Helper function to render pagination numbers
+  const renderPagination = (currentPage: number, totalItems: number, onPageChange: (p: number) => void) => {
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
+    if (totalPages <= 1) return null
+
+    return (
+      <div className="flex justify-center gap-2 mt-10">
+        {Array.from({ length: totalPages }).map((_, i) => {
+          const p = i + 1
+          return (
+            <button 
+              key={p} 
+              onClick={() => onPageChange(p)} 
+              className={`w-9 h-9 rounded-lg text-sm font-bold transition-colors ${
+                currentPage === p ? 'bg-[#0D2B52] text-white shadow-md' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              {p}
+            </button>
+          )
+        })}
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen">
 
-   {/* HERO */}
+      {/* HERO */}
       <section className="relative overflow-hidden pt-24 pb-8 lg:pt-32 lg:pb-16"
         style={{ background: 'linear-gradient(135deg, #0D2B52 0%, #1A56A0 100%)' }}>
         <div className="absolute inset-0 pointer-events-none">
@@ -168,18 +216,14 @@ export default function HomePage() {
               
               {/* COMPACT MOBILE BUTTON GRID */}
               <div className="grid grid-cols-2 sm:flex sm:flex-row gap-3">
-                {/* Primary Button - Full width on mobile */}
                 <Link href="/datasets" className="col-span-2 inline-flex justify-center items-center gap-2 px-5 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-0.5" style={{ background: '#E8A020' }}>
                   <Database className="w-4 h-4" /> {t('hero_btn_datasets')} <ArrowRight className="w-4 h-4" />
                 </Link>
-                
-                {/* Secondary Buttons - Side-by-side on mobile */}
                 <Link href="/insights" className="inline-flex justify-center items-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-sm text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
                  <BookOpen className="w-4 h-4" /> {t('hero_btn_insights')}
                 </Link>
-                
                 <Link href="/reports" className="inline-flex justify-center items-center gap-1.5 px-3 py-2.5 rounded-xl font-semibold text-sm text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
-                  <Download className="w-4 h-4" /> Reports
+                  <Download className="w-4 h-4" /> {t('nav_reports')}
                 </Link>
               </div>
 
@@ -187,7 +231,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
 
       {/* HAITI STATS */}
       <section className="py-16 bg-white border-b border-gray-100">
@@ -214,24 +257,23 @@ export default function HomePage() {
         </div>
       </section>
 
-     {/* LATEST RESOURCES — Datasets + Reports together */}
+      {/* RESOURCES (DATASETS) */}
       <section className="py-16" style={{ background: 'var(--light)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="flex items-center justify-between mb-10">
-            <div>
-              <h2 className="font-sora text-2xl font-bold mb-1" style={{ color: 'var(--navy)' }}>{t('resources_title')}</h2>
-              <p className="text-sm" style={{ color: 'var(--muted)' }}>{t('resources_desc')}</p>
-            </div>
-            <Link href="/resources" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
-              {t('resources_view')} <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="flex items-center justify-between mb-8">
+  <h2 className="font-sora text-2xl font-bold" style={{ color: 'var(--navy)' }}>{t('datasets_title')}</h2>
+  <Link href="/datasets" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
+    {t('datasets_view')} <ArrowRight className="w-3.5 h-3.5" />
+  </Link>
+</div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {featuredDatasets.map((dataset, i) => (
               <motion.div key={'d-' + dataset.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
-                <Link href={dataset.href} className="block bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1 group h-full">
+                
+                {/* FIXED: Changed from <Link> to <a> tag and added embed_url / pdf_url support */}
+                <a href={dataset.embed_url || dataset.pdf_url || dataset.href || '#'} target="_blank" rel="noopener noreferrer" className="block bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1 group h-full flex flex-col">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ background: '#E8F0FC', color: '#1A56A0' }}>{t('badge_dataset')}</span>
@@ -240,40 +282,58 @@ export default function HomePage() {
                         {dataset.category}
                       </span>
                     </div>
-                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--blue)' }} />
+                    {/* Added External Icon for consistency */}
+                    <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--blue)' }} />
                   </div>
                   <h3 className="font-semibold text-base mb-2 leading-snug" style={{ color: 'var(--navy)' }}>{dataset.title}</h3>
                   <div className="flex items-center justify-between text-xs mt-auto pt-3 border-t border-gray-100" style={{ color: 'var(--muted)' }}>
-                    <span>Source: <strong style={{ color: 'var(--text)' }}>{dataset.source}</strong></span>
+                    <span>{t('source') || 'Source'}: <strong style={{ color: 'var(--text)' }}>{dataset.source}</strong></span>
                     <span className="flex items-center gap-1"><Download className="w-3 h-3" />{dataset.downloads?.toLocaleString()}</span>
                   </div>
-                </Link>
+                </a>
+
               </motion.div>
             ))}
+          </div>
 
+          {/* REPORTS (PAGINATED) */}
+         <div className="flex items-center justify-between mb-8">
+  <h2 className="font-sora text-2xl font-bold" style={{ color: 'var(--navy)' }}>{t('reports_title')}</h2>
+  <Link href="/reports" className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
+    {t('reports_view')} <ArrowRight className="w-3.5 h-3.5" />
+  </Link>
+</div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredReports.map((report, i) => (
-              <motion.div key={'r-' + report.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: (i + 3) * 0.1 }}>
-                <Link href="/reports" className="block bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1 group h-full">
+              <motion.div key={'r-' + i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
+                
+                {/* FIXED: Added embed_url and pdf_url checks here too */}
+                <a href={report.embed_url || report.pdf_url || report.href || '#'} target="_blank" rel="noopener noreferrer" className="block bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1 group h-full flex flex-col">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <span className="px-2 py-0.5 rounded-full text-xs font-bold" style={{ background: '#E6F5ED', color: '#1E8A4C' }}>{t('badge_report')}</span>
                     </div>
-                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--blue)' }} />
+                    <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--blue)' }} />
                   </div>
                   <h3 className="font-semibold text-base mb-2 leading-snug" style={{ color: 'var(--navy)' }}>{report.title}</h3>
                   <div className="flex items-center justify-between text-xs mt-auto pt-3 border-t border-gray-100" style={{ color: 'var(--muted)' }}>
                     <span className="font-semibold" style={{ color: 'var(--blue)' }}>{report.organization}</span>
                     <span>{report.year}</span>
                   </div>
-                </Link>
+                </a>
+
               </motion.div>
             ))}
-
           </div>
+          
+          {/* REPORTS PAGINATION NUMBERS */}
+          {renderPagination(reportsPage, totalReports, setReportsPage)}
+
         </div>
       </section>
 
-      {/* LATEST INSIGHTS */}
+      {/* LATEST INSIGHTS (PAGINATED) */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-10">
@@ -285,33 +345,40 @@ export default function HomePage() {
              {t('insights_view')} <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {latestInsights.map((insight, i) => (
-              <motion.div key={insight.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
-                <Link href={insight.href} className="block bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1 group">
-                  <div className="h-28 flex items-center justify-center text-4xl" style={{ background: insight.bg }}>{insight.emoji}</div>
+              <motion.div key={'i-' + i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
+                
+                <Link href={insight.href || `/insights/${insight.title.toLowerCase().replace(/ /g, '-')}`} className="block bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all hover:-translate-y-1 group">
+                  <div className="h-28 flex items-center justify-center text-4xl" style={{ background: insight.bg || '#E8F0FC' }}>{insight.emoji || '📄'}</div>
                   <div className="p-5">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold"
                         style={{ background: (categoryColors[insight.category] || '#1A56A0') + '15', color: categoryColors[insight.category] || '#1A56A0' }}>
                         {insight.category}
                       </span>
-                      <span className="text-xs" style={{ color: 'var(--muted)' }}>{insight.readingTime} {t('min_read')}</span>
+                      <span className="text-xs" style={{ color: 'var(--muted)' }}>{insight.readingTime || 5} {t('min_read')}</span>
                     </div>
                     <h3 className="font-semibold text-sm leading-snug mb-3" style={{ color: 'var(--navy)' }}>{insight.title}</h3>
                     <div className="flex items-center justify-between text-xs" style={{ color: 'var(--muted)' }}>
-                      <span>{insight.date}</span>
-                      <span>👁 {insight.views.toLocaleString()} {t('views')}</span>
+                      <span>{insight.date || 'Recent'}</span>
+                      <span>👁 {insight.views?.toLocaleString() || 0} {t('views')}</span>
                     </div>
                   </div>
                 </Link>
+
               </motion.div>
             ))}
           </div>
+
+          {/* INSIGHTS PAGINATION NUMBERS */}
+          {renderPagination(insightsPage, totalInsights, setInsightsPage)}
+
         </div>
       </section>
 
-     {/* SUPPORT BANNER */}
+      {/* SUPPORT BANNER */}
       <section className="py-16" style={{ background: 'linear-gradient(135deg, #0D2B52 0%, #1A56A0 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
@@ -320,12 +387,9 @@ export default function HomePage() {
               {t('support_desc')}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              {/* SUPPORT US WITH HEART ICON */}
               <Link href="/support-us" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white transition-all hover:opacity-90 hover:-translate-y-0.5" style={{ background: '#E8A020' }}>
                 <HandHeart className="w-4 h-4" /> {t('support_btn')}
               </Link>
-              
-              {/* BECOME A PARTNER WITH HANDSHAKE ICON */}
               <Link href="/work-with-us/partner" className="inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold text-white bg-white/10 border border-white/20 transition-all hover:bg-white/20 hover:-translate-y-0.5">
                 <Handshake className="w-4 h-4" /> {t('partner_btn')}
               </Link>
