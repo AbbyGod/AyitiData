@@ -31,7 +31,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('ayitidata-lang', newLang)
   }
 
-  function t(key: TranslationKey): string {
+  function t(key: TranslationKey): any {
     return translations[lang][key] || translations['en'][key] || key
   }
 

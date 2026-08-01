@@ -3,14 +3,18 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { motion } from 'framer-motion'
-import { Send, Upload, CheckCircle } from 'lucide-react'
+import { Send, CheckCircle } from 'lucide-react'
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 
+// We keep categories in English as values so your database stays standardized.
+// If you want to translate these in the dropdown later, you can add them to translations.ts
 const CATEGORIES = [
   'Education', 'Economy', 'Health', 'Population',
   'Agriculture', 'Environment', 'Politics', 'Other'
 ]
 
 export default function SubmitResearchPage() {
+  const { t } = useLanguage()
   const [form, setForm] = useState({
     name: '', email: '', title: '', category: '',
     affiliation: '', abstract: '', file_url: '',
@@ -18,7 +22,7 @@ export default function SubmitResearchPage() {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
-async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
     // Honeypot check
@@ -53,22 +57,27 @@ async function handleSubmit(e: React.FormEvent) {
     if (error) { alert('Something went wrong. Please try again.'); return }
     setSubmitted(true)
   }
+
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4"
-        style={{ background: 'var(--light)' }}>
+      <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'var(--light)' }}>
         <div className="bg-white rounded-2xl border border-gray-100 p-12 max-w-md w-full text-center">
           <CheckCircle className="w-16 h-16 mx-auto mb-4" style={{ color: '#1E8A4C' }} />
           <h2 className="font-sora text-2xl font-bold mb-3" style={{ color: 'var(--navy)' }}>
-            Submission received!
+            {t('research_successTitle' as any)}
           </h2>
           <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--muted)' }}>
-            Thank you for submitting your research. Our team will review it within
-            5–7 business days and contact you at <strong>{form.email}</strong>.
+            {t('research_successMsg' as any)} <strong>{form.email}</strong>.
           </p>
-          <button onClick={() => { setSubmitted(false); setForm({ name: '', email: '', title: '', category: '', affiliation: '', abstract: '', file_url: '' }) }}
-            className="text-sm font-semibold hover:underline" style={{ color: 'var(--blue)' }}>
-            Submit another
+          <button 
+            onClick={() => { 
+              setSubmitted(false); 
+              setForm({ name: '', email: '', title: '', category: '', affiliation: '', abstract: '', file_url: '' }) 
+            }}
+            className="text-sm font-semibold hover:underline" 
+            style={{ color: 'var(--blue)' }}
+          >
+            {t('research_successBtn' as any)}
           </button>
         </div>
       </div>
@@ -77,15 +86,14 @@ async function handleSubmit(e: React.FormEvent) {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--light)' }}>
-      <div style={{ background: 'linear-gradient(135deg, #0D2B52 0%, #1A56A0 100%)' }}
-        className="px-4 py-16">
+      <div style={{ background: 'linear-gradient(135deg, #0D2B52 0%, #1A56A0 100%)' }} className="px-4 py-16">
         <div className="max-w-3xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}>
-            <h1 className="font-sora text-4xl font-bold text-white mb-3">Submit Your Research</h1>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <h1 className="font-sora text-4xl font-bold text-white mb-3">
+              {t('research_heroTitle' as any)}
+            </h1>
             <p className="text-white/70 text-lg max-w-xl">
-              Are you a researcher, student, or analyst with data-driven work about Haiti?
-              Share it with our community — we review all submissions and publish the best ones.
+              {t('research_heroSubtitle' as any)}
             </p>
           </motion.div>
         </div>
@@ -98,15 +106,15 @@ async function handleSubmit(e: React.FormEvent) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
-                  Full Name *
+                  {t('research_formName' as any)}
                 </label>
                 <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
-                  placeholder="Jean Pierre" required
+                  placeholder={t('research_formNamePlaceholder' as any)} required
                   className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400" />
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
-                  Email *
+                  {t('research_formEmail' as any)}
                 </label>
                 <input type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
                   placeholder="you@example.com" required
@@ -116,67 +124,65 @@ async function handleSubmit(e: React.FormEvent) {
 
             <div>
               <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
-                Research Title *
+                {t('research_formTitle' as any)}
               </label>
               <input type="text" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })}
-                placeholder="e.g. Unemployment trends in Haiti 2020–2024" required
+                placeholder={t('research_formTitlePlaceholder' as any)} required
                 className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
-                  Category
+                  {t('research_formCategory' as any)}
                 </label>
                 <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}
                   className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400">
-                  <option value="">Select a category...</option>
+                  <option value="">{t('research_formCategorySelect' as any)}</option>
                   {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
-                  Affiliation (optional)
+                  {t('research_formAffiliation' as any)}
                 </label>
                 <input type="text" value={form.affiliation} onChange={e => setForm({ ...form, affiliation: e.target.value })}
-                  placeholder="University, NGO, organization..."
+                  placeholder={t('research_formAffiliationPlaceholder' as any)}
                   className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400" />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
-                Abstract / Summary *
+                {t('research_formAbstract' as any)}
               </label>
               <textarea value={form.abstract} onChange={e => setForm({ ...form, abstract: e.target.value })}
-                placeholder="Describe your research, methodology, and key findings (200–500 words)..." required
+                placeholder={t('research_formAbstractPlaceholder' as any)} required
                 rows={6}
                 className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400 resize-none" />
             </div>
 
             <div>
               <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text)' }}>
-                File Link (optional)
+                {t('research_formFileLink' as any)}
               </label>
               <input type="text" value={form.file_url} onChange={e => setForm({ ...form, file_url: e.target.value })}
-                placeholder="Google Drive, Dropbox, or direct link to your PDF/DOCX..."
+                placeholder={t('research_formFilePlaceholder' as any)}
                 className="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl outline-none focus:border-blue-400" />
               <p className="text-xs mt-1.5" style={{ color: 'var(--muted)' }}>
-                Upload your file to Google Drive or Dropbox and paste the shareable link here.
+                {t('research_formFileHelp' as any)}
               </p>
             </div>
 
             <div className="pt-2">
-              {/* HONEYPOT — hidden from real users, catches bots */}
-            <input type="text" id="website" name="website" 
-              style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+              <input type="text" id="website" name="website" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
               <button type="submit" disabled={submitting}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white disabled:opacity-60"
                 style={{ background: 'var(--navy)' }}>
                 {submitting
                   ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                   : <Send className="w-4 h-4" />}
-                Submit for Review
+                {t('research_submitBtn' as any)}
               </button>
             </div>
           </form>

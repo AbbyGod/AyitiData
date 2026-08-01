@@ -97,7 +97,7 @@ export const translations = {
     updated: 'Updated',
     downloads: 'downloads',
 
-// RESOURCES PAGE
+    // RESOURCES PAGE
     res_title: 'Resources',
     res_subtitle: 'All datasets and official reports in one place — download data or explore documents from trusted sources.',
     res_search: 'Search by title, source, organization, topic...',
@@ -129,6 +129,124 @@ export const translations = {
     datasets_view: "View all Datasets",
     reports_title: "Latest Reports",
     reports_view: "View all Reports",
+
+    // ================= JOIN PAGE =================
+    join_heroTitle: "Join the Team",
+    join_heroSubtitle: "We're building a team of domain experts to produce world-class data analysis about Haiti. Are you in?",
+    join_openRolesTitle: "Open Roles",
+    join_applyNowTitle: "Apply Now",
+    join_formName: "Full Name *",
+    join_formEmail: "Email *",
+    join_formExpertise: "Area of Expertise *",
+    join_formSelect: "Select...",
+    join_formLinkedin: "LinkedIn (optional)",
+    join_formMotivationLabel: "Why do you want to join Ayiti Data? *",
+    join_formMotivationPlaceholder: "Tell us about your background, what you bring to the team, and why you're passionate about Haiti's data...",
+    join_submitBtn: "Submit Application",
+    join_successTitle: "Application received!",
+    join_successText: "Thank you for your interest in joining Ayiti Data. We'll review your application and get back to you soon.",
+    join_expertiseAreas: [
+      'Finance & Economics', 'Healthcare & Public Health', 'Education',
+      'Political Science', 'Demography & Statistics', 'Data Science & Engineering',
+      'Journalism & Communication', 'Agriculture & Environment', 'Law & Policy', 'Other'
+    ],
+    join_roles: [
+      { title: 'Finance Analyst', description: "Analyze Haiti's economic data and write data-driven reports on GDP, inflation, trade, and fiscal policy." },
+      { title: 'Health Data Specialist', description: "Work with health datasets to produce insights on healthcare access, mortality, disease, and public health in Haiti." },
+      { title: 'Education Researcher', description: "Analyze enrollment, literacy, and education policy data to produce accessible reports for a general audience." },
+      { title: 'Data Engineer', description: "Help us clean, structure, and publish datasets. Build pipelines to import data from government and international sources." },
+      { title: 'Political Analyst', description: "Cover elections, governance, and political developments in Haiti through a data lens." },
+      { title: 'Content Editor', description: "Review and edit articles written by our analysts for clarity, accuracy, and accessibility." }
+    ], 
+    
+    // ================= PARTNER PAGE =================
+    partner_heroTitle: "Partner With Us",
+    partner_heroSubtitle: "Join our network of organizations committed to open data and transparency in Haiti.",
+    partner_getInTouchTitle: "Get in Touch",
+    partner_formName: "Your Name *",
+    partner_formEmail: "Email *",
+    partner_formOrganization: "Organization *",
+    partner_formOrgType: "Organization Type",
+    partner_formSelect: "Select...",
+    partner_formWebsite: "Website",
+    partner_formMessageLabel: "Message *",
+    partner_formMessagePlaceholder: "Tell us about your organization and how you'd like to collaborate...",
+    partner_submitBtn: "Send Partnership Inquiry",
+    partner_successTitle: "Thank you!",
+    partner_successText: "We've received your partnership inquiry and will get back to you within 3–5 business days.",
+    partner_partnerTypes: [
+      'Academic Institution', 'NGO / Non-profit', 'Government Agency', 
+      'Media Organization', 'International Organization', 'Private Sector', 'Other'
+    ],
+    partner_benefits: [
+      { title: 'Data Access', description: 'Early access to new datasets and reports before public release.' },
+      { title: 'Co-branding', description: 'Your logo and link featured on the Ayiti Data partners page.' },
+      { title: 'Visibility', description: 'Joint communications and social media mentions to our audience.' },
+      { title: 'Collaboration', description: 'Opportunities to co-produce research, reports, and data projects.' },
+      { title: 'Capacity Building', description: 'Access to our data literacy workshops and training sessions.' },
+      { title: 'Impact', description: 'Contribute to a more data-driven and transparent Haiti.' },
+    ],
+
+    research_heroTitle: "Submit Your Research",
+    research_heroSubtitle: "Are you a researcher, student, or analyst with data-driven work about Haiti? Share it with our community. We review all submissions and publish the best ones.",
+    
+    research_formName: "Full Name *",
+    research_formNamePlaceholder: "Jean Pierre",
+    research_formEmail: "Email *",
+    
+    research_formTitle: "Research Title *",
+    research_formTitlePlaceholder: "e.g. Unemployment trends in Haiti 2020–2024",
+    
+    research_formCategory: "Category",
+    research_formCategorySelect: "Select a category...",
+    
+    research_formAffiliation: "Affiliation (optional)",
+    research_formAffiliationPlaceholder: "University, NGO, organization...",
+    
+    research_formAbstract: "Abstract / Summary *",
+    research_formAbstractPlaceholder: "Describe your research, methodology, and key findings (200–500 words)...",
+    
+    research_formFileLink: "File Link (optional)",
+    research_formFilePlaceholder: "Google Drive, Dropbox, or direct link to your PDF/DOCX...",
+    research_formFileHelp: "Upload your file to Google Drive or Dropbox and paste the shareable link here.",
+    
+    research_submitBtn: "Submit for Review",
+    
+    research_successTitle: "Submission received!",
+    research_successMsg: "Thank you for submitting your research. Our team will review it within 5–7 business days and contact you at",
+    research_successBtn: "Submit another",
+
+support_heroTitle: "Support Ayiti Data",
+    support_heroDesc: "Ayiti Data is free for everyone. Your support keeps the platform running, our analysts paid, and Haiti's data accessible to all.",
+    support_whyTitle: "Why Your Support Matters",
+    support_whyDesc: "Every donation directly funds our mission to make data about Haiti open, clean, and accessible. Here's where your money goes:",
+    support_tier1Title: "Technical Support",
+    support_tier1Desc: "Keep our servers running, fund new features, and maintain data infrastructure.",
+    support_tier1Ex1: "Server hosting",
+    support_tier1Ex2: "Data storage",
+    support_tier1Ex3: "New features",
+    support_tier1Ex4: "Security",
+    support_tier2Title: "People & Analysts",
+    support_tier2Desc: "Pay our analysts, writers, researchers, and editorial staff.",
+    support_tier2Ex1: "Data analysts",
+    support_tier2Ex2: "Writers & editors",
+    support_tier2Ex3: "Researchers",
+    support_tier2Ex4: "Community managers",
+    support_tier3Title: "Community & Charity",
+    support_tier3Desc: "Fund education initiatives, field activities, and community programs in Haiti.",
+    support_tier3Ex1: "Data literacy workshops",
+    support_tier3Ex2: "School programs",
+    support_tier3Ex3: "Field research",
+    support_tier3Ex4: "Community grants",
+    support_donateTitle: "Make a Donation",
+    support_donateDesc: "Choose one-time or monthly. Every amount makes a difference.",
+    support_amtCustom: "Custom",
+    support_freqOneTime: "One-time",
+    support_freqMonthly: "Monthly",
+    support_payBank: "Bank Transfer",
+    support_payBtn: "Donate with PayPal",
+    support_paySecure: "Secure payment processing. You can also donate anonymously.",
+    support_anonMsg: "Want to donate anonymously? Email us at",
 
   },
 
@@ -230,8 +348,7 @@ export const translations = {
     updated: 'Mis à jour',
     downloads: 'téléchargements',
 
-
-// RESOURCES PAGE
+    // RESOURCES PAGE
     res_title: 'Ressources',
     res_subtitle: 'Tous les jeux de données et rapports officiels au même endroit — téléchargez des données ou explorez des documents de sources fiables.',
     res_search: 'Rechercher par titre, source, organisation, sujet...',
@@ -264,6 +381,124 @@ export const translations = {
     reports_title: "Derniers Rapports",
     reports_view: "Voir tous les rapports",
 
+    // ================= JOIN PAGE =================
+    join_heroTitle: "Rejoignez l'Équipe",
+    join_heroSubtitle: "Nous construisons une équipe d'experts pour produire des analyses de données de classe mondiale sur Haïti. Êtes-vous de la partie ?",
+    join_openRolesTitle: "Postes Ouverts",
+    join_applyNowTitle: "Postulez Maintenant",
+    join_formName: "Nom Complet *",
+    join_formEmail: "Adresse E-mail *",
+    join_formExpertise: "Domaine d'Expertise *",
+    join_formSelect: "Sélectionner...",
+    join_formLinkedin: "LinkedIn (facultatif)",
+    join_formMotivationLabel: "Pourquoi voulez-vous rejoindre Ayiti Data ? *",
+    join_formMotivationPlaceholder: "Parlez-nous de votre parcours, de ce que vous apportez à l'équipe et de votre passion pour les données d'Haïti...",
+    join_submitBtn: "Soumettre la Candidature",
+    join_successTitle: "Candidature reçue !",
+    join_successText: "Merci de votre intérêt pour Ayiti Data. Nous examinerons votre candidature et vous contacterons bientôt.",
+    join_expertiseAreas: [
+      'Finance et Économie', 'Santé et Santé Publique', 'Éducation',
+      'Sciences Politiques', 'Démographie et Statistiques', 'Science des Données et Ingénierie',
+      'Journalisme et Communication', 'Agriculture et Environnement', 'Droit et Politiques Publiques', 'Autre'
+    ],
+    join_roles: [
+      { title: 'Analyste Financier', description: "Analysez les données économiques d'Haïti et rédigez des rapports basés sur les données concernant le PIB, l'inflation, le commerce et la politique fiscale." },
+      { title: 'Spécialiste des Données de Santé', description: "Travaillez avec des ensembles de données de santé pour produire des analyses sur l'accès aux soins, la mortalité, les maladies et la santé publique en Haïti." },
+      { title: 'Chercheur en Éducation', description: "Analysez les données sur les inscriptions, l'alphabétisation et les politiques éducatives pour produire des rapports accessibles au grand public." },
+      { title: 'Ingénieur de Données', description: "Aidez-nous à nettoyer, structurer et publier des ensembles de données. Créez des pipelines pour importer des données provenant de sources gouvernementales et internationales." },
+      { title: 'Analyste Politique', description: "Couvrez les élections, la gouvernance et les développements politiques en Haïti sous l'angle des données." },
+      { title: 'Éditeur de Contenu', description: "Révisez et éditez les articles rédigés par nos analystes pour en assurer la clarté, l'exactitude et l'accessibilité." }
+    ],
+
+    // ================= PARTNER PAGE =================
+    partner_heroTitle: "Devenez Partenaire",
+    partner_heroSubtitle: "Rejoignez notre réseau d'organisations engagées pour l'open data et la transparence en Haïti.",
+    partner_getInTouchTitle: "Contactez-nous",
+    partner_formName: "Votre Nom *",
+    partner_formEmail: "Adresse E-mail *",
+    partner_formOrganization: "Organisation *",
+    partner_formOrgType: "Type d'Organisation",
+    partner_formSelect: "Sélectionner...",
+    partner_formWebsite: "Site Web",
+    partner_formMessageLabel: "Message *",
+    partner_formMessagePlaceholder: "Parlez-nous de votre organisation et de la façon dont vous aimeriez collaborer...",
+    partner_submitBtn: "Envoyer la Demande",
+    partner_successTitle: "Merci !",
+    partner_successText: "Nous avons bien reçu votre demande de partenariat et vous répondrons d'ici 3 à 5 jours ouvrés.",
+    partner_partnerTypes: [
+      'Institution Académique', 'ONG / Association à but non lucratif', 'Agence Gouvernementale', 
+      'Organisation Médias', 'Organisation Internationale', 'Secteur Privé', 'Autre'
+    ],
+    partner_benefits: [
+      { title: 'Accès aux Données', description: 'Accès anticipé aux nouveaux ensembles de données et rapports avant leur publication.' },
+      { title: 'Co-marquage', description: 'Votre logo et lien présentés sur la page des partenaires d\'Ayiti Data.' },
+      { title: 'Visibilité', description: 'Communications conjointes et mentions sur les réseaux sociaux auprès de notre audience.' },
+      { title: 'Collaboration', description: 'Opportunités de coproduire des recherches, des rapports et des projets de données.' },
+      { title: 'Renforcement des Capacités', description: 'Accès à nos ateliers d\'alphabétisation aux données et sessions de formation.' },
+      { title: 'Impact', description: 'Contribuez à une Haïti plus transparente et axée sur les données.' },
+    ],
+
+research_heroTitle: "Soumettez Votre Recherche",
+    research_heroSubtitle: "Êtes-vous chercheur, étudiant ou analyste avec des travaux basés sur des données concernant Haïti ? Partagez-les avec notre communauté. Nous examinons toutes les soumissions et publions les meilleures.",
+    
+    research_formName: "Nom Complet *",
+    research_formNamePlaceholder: "Jean Pierre",
+    research_formEmail: "E-mail *",
+    
+    research_formTitle: "Titre de la recherche *",
+    research_formTitlePlaceholder: "ex. Tendances du chômage en Haïti 2020–2024",
+    
+    research_formCategory: "Catégorie",
+    research_formCategorySelect: "Sélectionnez une catégorie...",
+    
+    research_formAffiliation: "Affiliation (optionnel)",
+    research_formAffiliationPlaceholder: "Université, ONG, organisation...",
+    
+    research_formAbstract: "Résumé *",
+    research_formAbstractPlaceholder: "Décrivez votre recherche, méthodologie et principales conclusions (200–500 mots)...",
+    
+    research_formFileLink: "Lien du fichier (optionnel)",
+    research_formFilePlaceholder: "Google Drive, Dropbox, ou lien direct vers votre PDF/DOCX...",
+    research_formFileHelp: "Téléversez votre fichier sur Google Drive ou Dropbox et collez le lien de partage ici.",
+    
+    research_submitBtn: "Soumettre pour évaluation",
+    
+    research_successTitle: "Soumission reçue !",
+    research_successMsg: "Merci d'avoir soumis votre recherche. Notre équipe l'examinera dans un délai de 5 à 7 jours ouvrables et vous contactera à l'adresse",
+    research_successBtn: "Soumettre une autre",
+
+
+    support_heroTitle: "Soutenez Ayiti Data",
+    support_heroDesc: "Ayiti Data est gratuit pour tous. Votre soutien permet de maintenir la plateforme, de payer nos analystes et de rendre les données d'Haïti accessibles à tous.",
+    support_whyTitle: "Pourquoi votre soutien compte",
+    support_whyDesc: "Chaque don finance directement notre mission visant à rendre les données sur Haïti ouvertes, propres et accessibles. Voici où va votre argent :",
+    support_tier1Title: "Support Technique",
+    support_tier1Desc: "Maintenir nos serveurs, financer de nouvelles fonctionnalités et gérer l'infrastructure des données.",
+    support_tier1Ex1: "Hébergement de serveurs",
+    support_tier1Ex2: "Stockage de données",
+    support_tier1Ex3: "Nouvelles fonctionnalités",
+    support_tier1Ex4: "Sécurité",
+    support_tier2Title: "Personnes et Analystes",
+    support_tier2Desc: "Payer nos analystes, rédacteurs, chercheurs et l'équipe éditoriale.",
+    support_tier2Ex1: "Analystes de données",
+    support_tier2Ex2: "Rédacteurs et éditeurs",
+    support_tier2Ex3: "Chercheurs",
+    support_tier2Ex4: "Gestionnaires de communauté",
+    support_tier3Title: "Communauté et Charité",
+    support_tier3Desc: "Financer des initiatives éducatives, des activités sur le terrain et des programmes communautaires en Haïti.",
+    support_tier3Ex1: "Ateliers de littératie des données",
+    support_tier3Ex2: "Programmes scolaires",
+    support_tier3Ex3: "Recherche sur le terrain",
+    support_tier3Ex4: "Subventions communautaires",
+    support_donateTitle: "Faire un don",
+    support_donateDesc: "Choisissez un don unique ou mensuel. Chaque montant fait la différence.",
+    support_amtCustom: "Autre",
+    support_freqOneTime: "Une fois",
+    support_freqMonthly: "Mensuel",
+    support_payBank: "Virement",
+    support_payBtn: "Faire un don avec PayPal",
+    support_paySecure: "Traitement sécurisé. Vous pouvez également donner de manière anonyme.",
+    support_anonMsg: "Vous souhaitez donner anonymement ? Envoyez-nous un email à",
 
   },
 
@@ -365,7 +600,7 @@ export const translations = {
     updated: 'Mete ajou',
     downloads: 'telechajman',
 
-// RESOURCES PAGE
+    // RESOURCES PAGE
     res_title: 'Resous',
     res_subtitle: 'Tout done ak rapò ofisyèl yo yon sèl kote — telechaje done oswa eksplore dokiman ki soti nan sous ou ka fè konfyans.',
     res_search: 'Chèche pa tit, sous, òganizasyon, sijè...',
@@ -398,139 +633,126 @@ export const translations = {
     reports_title: "Dènye Rapò yo",
     reports_view: "Wè tout rapò yo",
 
-  },
+    // ================= JOIN PAGE =================
+    join_heroTitle: "Vin Jwenn Ekip La",
+    join_heroSubtitle: "N ap bati yon ekip ekspè pou pwodui pi bon analiz done sou Ayiti. Èske w prè pou w patisipe?",
+    join_openRolesTitle: "Pòs ki Ouvè",
+    join_applyNowTitle: "Aplike Kounye a",
+    join_formName: "Non Konplè *",
+    join_formEmail: "Imèl *",
+    join_formExpertise: "Domèn Ekspètiz *",
+    join_formSelect: "Chwazi...",
+    join_formLinkedin: "LinkedIn (Si ou vle)",
+    join_formMotivationLabel: "Poukisa ou vle vin jwenn Ayiti Data? *",
+    join_formMotivationPlaceholder: "Pale nou de pakou w, sa w ap pote nan ekip la, ak poukisa w pasyone de done Ayiti...",
+    join_submitBtn: "Soumèt Aplikasyon an",
+    join_successTitle: "Nou resevwa aplikasyon w lan!",
+    join_successText: "Mèsi pou enterè w nan Ayiti Data. Nou pral evalye aplikasyon w lan epi n ap kontakte w byento.",
+    join_expertiseAreas: [
+      'Finans ak Ekonomi', 'Swen Sante ak Sante Piblik', 'Edikasyon',
+      'Syans Politik', 'Demografi ak Estatistik', 'Syans Done ak Jeni',
+      'Jounalis ak Kominikasyon', 'Agrikilti ak Anviwònman', 'Dwa ak Politik Piblik', 'Lòt'
+    ],
+    join_roles: [
+      { title: 'Analiste Finansye', description: "Analize done ekonomik Ayiti epi ekri rapò ki baze sou done pou PIB, enflasyon, komès, ak politik fiskal." },
+      { title: 'Espesyalis Done Sante', description: "Travay ak done sante pou pwodui analiz sou aksè ak swen sante, mòtalite, maladi, ak sante piblik an Ayiti." },
+      { title: 'Chèchè nan Edikasyon', description: "Analize done sou kantite moun ki anrejistre lekòl, alfabetizasyon, ak politik edikasyon pou pwodui rapò ki fasil pou konprann pou tout moun." },
+      { title: 'Enjenyè Done', description: "Ede nou netwaye, estriktire, epi pibliye done. Bati sistèm pou enpòte done ki soti nan gouvènman ak sous entènasyonal yo." },
+      { title: 'Analiste Politik', description: "Kouvri eleksyon, gouvènans, ak devlopman politik an Ayiti nan yon pèspektiv done." },
+      { title: 'Editè Kontni', description: "Revize epi korije atik analis nou yo ekri pou asire yo klè, egzak, epi fasil pou li." }
+    ], 
 
-  es: {
-    // NAVBAR
-    nav_home: 'Inicio',
-    nav_datasets: 'Datos',
-    nav_insights: 'Análisis',
-    nav_reports: 'Informes',
-    nav_glossary: 'Glosario',
-    nav_about: 'Acerca de',
-    nav_mission: 'Misión',
-    nav_team: 'Nuestro equipo',
-    nav_partners: 'Socios',
-    nav_work: 'Trabaja con nosotros',
-    nav_submit: 'Enviar investigación',
-    nav_partner: 'Ser socio',
-    nav_join: 'Únete al equipo',
-    nav_support: 'Apóyanos',
+    // ================= PARTNER PAGE =================
+    partner_heroTitle: "Fè Patenarya Avèk Nou",
+    partner_heroSubtitle: "Vin jwenn rezo òganizasyon nou yo ki angaje nan done ouvè ak transparans ann Ayiti.",
+    partner_getInTouchTitle: "Kontakte Nou",
+    partner_formName: "Non w *",
+    partner_formEmail: "Imèl *",
+    partner_formOrganization: "Òganizasyon *",
+    partner_formOrgType: "Kalite Òganizasyon",
+    partner_formSelect: "Chwazi...",
+    partner_formWebsite: "Sitwèb",
+    partner_formMessageLabel: "Mesaj *",
+    partner_formMessagePlaceholder: "Pale nou de òganizasyon w lan ak kijan w ta renmen nou kolabore...",
+    partner_submitBtn: "Voye Demann Patenarya a",
+    partner_successTitle: "Mèsi!",
+    partner_successText: "Nou resevwa demann patenarya w la epi n ap reponn ou nan 3 a 5 jou ouvrab.",
+    partner_partnerTypes: [
+      'Enstitisyon Akademik', 'ONG / Òganizasyon San Pwofi', 'Ajans Gouvènman', 
+      'Òganizasyon Medya', 'Òganizasyon Entènasyonal', 'Sektè Prive', 'Lòt'
+    ],
+    partner_benefits: [
+      { title: 'Aksè ak Done', description: 'Aksè rapid ak nouvo baz done ak rapò anvan yo pibliye pou piblik la.' },
+      { title: 'Patenarya Mak', description: 'Logo w ak lyen w ap parèt sou paj patnè Ayiti Data.' },
+      { title: 'Vizibilite', description: 'Kominikasyon ansanm ak mansyon sou rezo sosyal pou piblik nou an.' },
+      { title: 'Kolaborasyon', description: 'Opòtinite pou nou pwodui rechèch, rapò, ak pwojè done ansanm.' },
+      { title: 'Ranfòsman Kapasite', description: 'Aksè ak atelye alfabetizasyon done ak sesyon fòmasyon nou yo.' },
+      { title: 'Enpak', description: 'Kontribye nan yon Ayiti ki pi transparan epi ki baze sou done.' },
+    ],
 
-    // HOMEPAGE HERO
-    hero_badge: 'Plataforma de datos abiertos para Haití',
-    hero_title_1: 'Datos sobre Haití,',
-    hero_title_2: 'abiertos y accesibles',
-    hero_title_3: 'para todos.',
-    hero_desc: "Ayiti Data recopila, limpia y publica datos de alta calidad sobre Haití — para estudiantes, investigadores, periodistas, ONG y ciudadanos.",
-    hero_btn_datasets: 'Explorar datos',
-    hero_btn_insights: 'Leer análisis',
-    hero_btn_reports: 'Informes',
-
-    // STATS
-    stats_title: 'Haití en cifras',
-    stats_desc: 'Indicadores clave actualizados regularmente desde fuentes confiables',
-    stat_population: 'Población',
-    stat_population_desc: 'Personas en Haití',
-    stat_gdp: 'PIB',
-    stat_gdp_desc: 'Producto Interno Bruto',
-    stat_area: 'Área',
-    stat_area_desc: 'Área total de tierra',
-    stat_literacy: 'Alfabetización',
-    stat_literacy_desc: 'Tasa de alfabetización adulta',
-    stat_life: 'Esperanza de vida',
-    stat_life_desc: 'Esperanza de vida promedio',
-    stat_inflation: 'Inflación',
-    stat_inflation_desc: 'Tasa de inflación anual 2024',
-
-    // RESOURCES
-    resources_title: 'Últimos recursos',
-    resources_desc: 'Datos para descargar e informes para explorar',
-    resources_view: 'Ver recursos',
-    badge_dataset: 'Datos',
-    badge_report: 'Informe',
-
-    // INSIGHTS
-    insights_title: 'Últimos análisis',
-    insights_desc: 'Análisis basados en datos sobre Haití',
-    insights_view: 'Ver todo',
-    min_read: 'min de lectura',
-    views: 'vistas',
-
-    // SUPPORT
-    support_title: "Ayúdanos a mantener los datos de Haití abiertos",
-    support_desc: "Ayiti Data es gratuito para todos. Tu apoyo financia a nuestros analistas, infraestructura técnica y programas comunitarios.",
-    support_btn: 'Apoyar Ayiti Data',
-    partner_btn: 'Ser socio',
-
-    // NEWSLETTER
-    newsletter_title: 'Mantente informado',
-    newsletter_desc: "Recibe notificaciones cuando se publiquen nuevos datos, análisis e informes. Sin spam, cancela cuando quieras.",
-    newsletter_placeholder: 'tu@correo.com',
-    newsletter_btn: 'Suscribirse',
-
-    // FOOTER
-    footer_tagline: "Haciendo los datos sobre Haití abiertos, limpios y accesibles para todos.",
-    footer_explore: 'Explorar',
-    footer_about: 'Acerca de',
-    footer_contribute: 'Contribuir',
-    footer_legal: 'Legal',
-    footer_rights: 'Todos los derechos reservados.',
-    footer_made: 'Construido con propósito para Haití',
-    footer_terms: 'Términos de servicio',
-    footer_privacy: 'Política de privacidad',
-    footer_cookies: 'Política de cookies',
-    footer_map: 'Mapa de datos',
-    footer_request: 'Solicitar un conjunto de datos',
-    footer_contact: 'Contáctanos',
-    footer_newsletter: 'Boletín',
-    stay_updated: 'Mantente informado',
-    stay_updated_desc: 'Recibe notificaciones cuando se publiquen nuevos datos y análisis.',
-
-    // COMMON
-    loading: 'Cargando...',
-    no_results: 'No se encontraron resultados',
-    clear_filters: 'Limpiar filtros',
-    search_placeholder: 'Buscar...',
-    view_dataset: 'Ver datos',
-    download: 'Descargar',
-    source: 'Fuente',
-    updated: 'Actualizado',
-    downloads: 'descargas',
-
-// RESOURCES PAGE
-    res_title: 'Recursos',
-    res_subtitle: 'Todos los conjuntos de datos e informes oficiales en un solo lugar: descargue datos o explore documentos de fuentes confiables.',
-    res_search: 'Buscar por título, fuente, organización, tema...',
-    res_open_original: 'Abrir Original',
-    res_view_source: 'Ver en la fuente original',
-    res_hosted_on: 'Este informe está alojado en el sitio web oficial de',
-    res_open_report: 'Abrir Informe',
-    res_found: 'recursos encontrados',
-    res_for: 'para',
-    res_legal: 'Los informes están enlazados directamente desde sus fuentes originales. Ayiti Data no aloja ni reproduce documentos oficiales. Los conjuntos de datos con botones de descarga son versiones limpiadas por nuestro equipo.',
-    res_try_diff: 'Prueba con una búsqueda o filtro diferente.',
-    res_view_report: 'Ver Informe',
+research_heroTitle: "Soumèt Rechèch Ou",
+    research_heroSubtitle: "Èske ou se yon chèchè, etidyan, oswa analis ki gen travay sou done ki konsène Ayiti? Pataje l ak kominote nou an. Nou egzamine tout soumisyon yo epi pibliye sa ki pi bon yo.",
     
-    // FILTERS
-    cat_All: 'Todo',
-    cat_Population: 'Población',
-    cat_Education: 'Educación',
-    cat_Economy: 'Economía',
-    cat_Health: 'Salud',
-    cat_Agriculture: 'Agricultura',
-    cat_Humanitarian: 'Humanitario',
-    cat_Politics: 'Política',
-    cat_Other: 'Otro',
-    type_All: 'Todo',
-    type_Datasets: 'Datos',
-    type_Reports: 'Informes',
+    research_formName: "Non Konplè *",
+    research_formNamePlaceholder: "Jean Pierre",
+    research_formEmail: "Imèl *",
+    
+    research_formTitle: "Tit Rechèch la *",
+    research_formTitlePlaceholder: "egz. Tandans chomaj an Ayiti 2020–2024",
+    
+    research_formCategory: "Kategori",
+    research_formCategorySelect: "Chwazi yon kategori...",
+    
+    research_formAffiliation: "Afilyasyon (opsyonèl)",
+    research_formAffiliationPlaceholder: "Inivèsite, ONG, òganizasyon...",
+    
+    research_formAbstract: "Rezime *",
+    research_formAbstractPlaceholder: "Dekri rechèch ou a, metodoloji, ak rezilta prensipal yo (200–500 mo)...",
+    
+    research_formFileLink: "Lyen Fichye (opsyonèl)",
+    research_formFilePlaceholder: "Google Drive, Dropbox, oswa lyen dirèk pou PDF/DOCX ou a...",
+    research_formFileHelp: "Mete fichye ou a sou Google Drive oswa Dropbox epi kole lyen pataje a isit la.",
+    
+    research_submitBtn: "Soumèt pou Evalyasyon",
+    
+    research_successTitle: "Nou resevwa soumisyon w lan!",
+    research_successMsg: "Mèsi paske ou soumèt rechèch ou a. Ekip nou an ap gade l nan 5 a 7 jou travay epi y ap kontakte w nan",
+    research_successBtn: "Soumèt yon lòt",
+
+    support_heroTitle: "Sipòte Ayiti Data",
+    support_heroDesc: "Ayiti Data gratis pou tout moun. Sipò w ede nou kenbe platfòm lan, peye analis nou yo, epi fè done sou Ayiti aksesib pou tout moun.",
+    support_whyTitle: "Poukisa sipò w enpòtan",
+    support_whyDesc: "Chak don finanse dirèkteman misyon nou pou fè done sou Ayiti ouvè, pwòp, epi aksesib. Men kote lajan w ale :",
+    support_tier1Title: "Sipò Teknik",
+    support_tier1Desc: "Kenbe sèvè nou yo mache, finanse nouvo fonksyonalite, epi jere enfrastrikti done yo.",
+    support_tier1Ex1: "Ebèjman sèvè",
+    support_tier1Ex2: "Stokaj done",
+    support_tier1Ex3: "Nouvo fonksyonalite",
+    support_tier1Ex4: "Sekirite",
+    support_tier2Title: "Moun ak Analis",
+    support_tier2Desc: "Peye analis nou yo, redaktè, chèchè, ak ekip editoryal la.",
+    support_tier2Ex1: "Analis done",
+    support_tier2Ex2: "Redaktè ak editè",
+    support_tier2Ex3: "Chèchè",
+    support_tier2Ex4: "Manadjè kominote",
+    support_tier3Title: "Kominote ak Charite",
+    support_tier3Desc: "Finanse inisyativ edikasyon, aktivite sou teren, ak pwogram kominotè an Ayiti.",
+    support_tier3Ex1: "Atelye literasi done",
+    support_tier3Ex2: "Pwogram lekòl",
+    support_tier3Ex3: "Rechèch sou teren",
+    support_tier3Ex4: "Sibvansyon kominotè",
+    support_donateTitle: "Fè yon Don",
+    support_donateDesc: "Chwazi yon sèl fwa oswa chak mwa. Chak ti kòb fè yon diferans.",
+    support_amtCustom: "Pèsonalize",
+    support_freqOneTime: "Yon fwa",
+    support_freqMonthly: "Chak mwa",
+    support_payBank: "Transfè Labank",
+    support_payBtn: "Fè don ak PayPal",
+    support_paySecure: "Peman sekirize. Ou ka fè don an kachèt tou.",
+    support_anonMsg: "Ou vle fè don an kachèt? Voye yon imèl ba nou nan",
 
   },
 }
 
-
-
-
-export type Language = 'en' | 'fr' | 'ht' | 'es'
+export type Language = 'en' | 'fr' | 'ht' 
 export type TranslationKey = keyof typeof translations.en

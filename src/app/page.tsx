@@ -20,13 +20,15 @@ import {
   DollarSign,
   HandHeart,
   Handshake,
-  ExternalLink
+  ExternalLink,
+  ChevronLeft,
+  ChevronRight,
+  MoreHorizontal
 } from 'lucide-react'
 
 // ═══════════════════════════════════════════
 // TYPES FOR SUPABASE DATA
 // ═══════════════════════════════════════════
-// FIXED: Added embed_url and pdf_url to both types
 type Dataset = { title: string; category: string; source: string; updated: string; downloads: number; embed_url?: string; pdf_url?: string; href?: string; file_url?: string; url?: string; link?: string }
 type Report = { title: string; organization: string; category: string; year: number; embed_url?: string; pdf_url?: string; href?: string; file_url?: string; url?: string; link?: string; csv_url?: string }
 type Insight = { title: string; category: string; date: string; readingTime: number; views: number; emoji: string; bg: string; href: string }
@@ -139,10 +141,9 @@ export default function HomePage() {
       const from = (insightsPage - 1) * ITEMS_PER_PAGE
       const to = from + ITEMS_PER_PAGE - 1
       const { data, count } = await supabase
-        .from('articles') // Assuming insights are in the 'articles' table
+        .from('articles')
         .select('*', { count: 'exact' })
         .eq('status', 'published')
-        // .eq('language', currentLanguage) // Uncomment if articles have language column
         .order('created_at', { ascending: false })
         .range(from, to)
 
@@ -161,27 +162,63 @@ export default function HomePage() {
     { icon: TrendingUp, label: t('stat_inflation'), value: 28, suffix: '%', description: t('stat_inflation_desc'), color: '#0D2B52', bg: '#E8F0FC' },
   ]
 
-  // Helper function to render pagination numbers
+  // SMART PAGINATION LOGIC
   const renderPagination = (currentPage: number, totalItems: number, onPageChange: (p: number) => void) => {
     const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE)
     if (totalPages <= 1) return null
 
+    const getPageNumbers = () => {
+      if (totalPages <= 7) return Array.from({ length: totalPages }, (_, i) => i + 1)
+      if (currentPage <= 3) return [1, 2, 3, 4, '...', totalPages]
+      if (currentPage >= totalPages - 2) return [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
+      return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
+    }
+
+    const pages = getPageNumbers()
+
     return (
-      <div className="flex justify-center gap-2 mt-10">
-        {Array.from({ length: totalPages }).map((_, i) => {
-          const p = i + 1
-          return (
-            <button 
-              key={p} 
-              onClick={() => onPageChange(p)} 
-              className={`w-9 h-9 rounded-lg text-sm font-bold transition-colors ${
-                currentPage === p ? 'bg-[#0D2B52] text-white shadow-md' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
-              }`}
-            >
-              {p}
-            </button>
-          )
-        })}
+      <div className="flex items-center justify-center space-x-2 mt-10">
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="p-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        <div className="flex items-center space-x-1">
+          {pages.map((page, index) => {
+            if (page === '...') {
+              return (
+                <div key={`ellipsis-${index}`} className="px-3 py-2 text-gray-400">
+                  <MoreHorizontal className="w-5 h-5" />
+                </div>
+              )
+            }
+            const isCurrent = page === currentPage
+            return (
+              <button
+                key={page}
+                onClick={() => onPageChange(page as number)}
+                className={`min-w-[40px] h-10 px-4 rounded-lg text-sm font-semibold transition-colors ${
+                  isCurrent
+                    ? 'bg-[#0D2B52] text-white shadow-sm'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                {page}
+              </button>
+            )
+          })}
+        </div>
+
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="p-2 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
       </div>
     )
   }
@@ -272,7 +309,6 @@ export default function HomePage() {
             {featuredDatasets.map((dataset, i) => (
               <motion.div key={'d-' + dataset.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
                 
-                {/* FIXED: Changed from <Link> to <a> tag and added embed_url / pdf_url support */}
                 <a href={dataset.embed_url || dataset.pdf_url || dataset.href || '#'} target="_blank" rel="noopener noreferrer" className="block bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1 group h-full flex flex-col">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">
@@ -282,7 +318,6 @@ export default function HomePage() {
                         {dataset.category}
                       </span>
                     </div>
-                    {/* Added External Icon for consistency */}
                     <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: 'var(--blue)' }} />
                   </div>
                   <h3 className="font-semibold text-base mb-2 leading-snug" style={{ color: 'var(--navy)' }}>{dataset.title}</h3>
@@ -308,7 +343,6 @@ export default function HomePage() {
             {featuredReports.map((report, i) => (
               <motion.div key={'r-' + i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
                 
-                {/* FIXED: Added embed_url and pdf_url checks here too */}
                 <a href={report.embed_url || report.pdf_url || report.href || '#'} target="_blank" rel="noopener noreferrer" className="block bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all hover:-translate-y-1 group h-full flex flex-col">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-2">

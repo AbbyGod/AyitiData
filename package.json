@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",
-    "@supabase/supabase-js": "^2.110.1",
+    "@supabase/supabase-js": "^2.110.8",
     "@tiptap/extension-character-count": "^3.27.3",
     "@tiptap/extension-highlight": "^3.27.3",
     "@tiptap/extension-image": "^3.27.3",
@@ -22,7 +22,9 @@
     "@tiptap/react": "^3.27.3",
     "@tiptap/starter-kit": "^3.27.3",
     "@types/geojson": "^7946.0.16",
+    "@vitalets/google-translate-api": "^9.2.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.4.2",
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.23.0",
     "next": "16.2.10",
