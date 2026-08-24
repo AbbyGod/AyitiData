@@ -151,8 +151,7 @@ export default function HomePage() {
                 to all.
               </h1>
               <p className="text-lg text-white/70 max-w-xl mb-10 leading-relaxed">
-                Ayiti Data collects, cleans, and publishes high-quality data about Haiti —
-                empowering students, researchers, journalists, NGOs, and citizens.
+                ........
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link href="/datasets"

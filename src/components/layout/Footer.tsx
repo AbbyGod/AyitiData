@@ -5,7 +5,8 @@ import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import { 
   Mail,
-  MapPin
+  MapPin,
+  ChevronDown 
 } from 'lucide-react'
 
 import {
@@ -77,6 +78,42 @@ function NewsletterForm() {
   )
 }
 
+// ----------------------------------------------------
+// NEW MOBILE ACCORDION COMPONENT
+// ----------------------------------------------------
+function FooterSection({ title, links }: { title: string, links: { href: string, label: string }[] }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border-b border-white/10 lg:border-none py-3 lg:py-0">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex justify-between items-center w-full lg:cursor-default lg:pointer-events-none"
+      >
+        <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-0 lg:mb-4">
+          {title}
+        </h4>
+        <ChevronDown 
+          className={`w-4 h-4 text-white/60 transition-transform duration-200 lg:hidden ${isOpen ? 'rotate-180' : ''}`} 
+        />
+      </button>
+      
+      <ul className={`flex-col gap-2 pt-4 pb-2 lg:pb-0 lg:pt-0 lg:flex ${isOpen ? 'flex' : 'hidden'}`}>
+        {links.map((link) => (
+          <li key={link.label}>
+            <Link
+              href={link.href}
+              className="text-sm text-white/60 hover:text-white transition-colors"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 export default function Footer() {
   const { t } = useLanguage()
   
@@ -112,11 +149,11 @@ export default function Footer() {
     <footer style={{ background: 'var(--navy)' }} className="text-white">
 
       {/* MAIN FOOTER */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-12">
 
           {/* BRAND */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 mb-2 lg:mb-0">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-white/10">
                 <svg viewBox="0 0 18 18" fill="none" className="w-5 h-5">
@@ -148,13 +185,13 @@ export default function Footer() {
             </div>
 
             {/* CONTACT INFO */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-3">
               <a
-                href="mailto:hello@ayitidata.org"
+                href="mailto:ayitidata@gmail.com"
                 className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors"
               >
                 <Mail className="w-4 h-4" />
-                hello@ayitidata.org
+                ayitidata@gmail.com
               </a>
 
               <div className="flex items-center gap-2 text-sm text-white/60">
@@ -164,82 +201,22 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* EXPLORE */}
-          <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              {t('footer_explore')}
-            </h4>
-            <ul className="flex flex-col gap-2.5">
-              {footerLinks.explore.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-white/60 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* ABOUT */}
-          <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              {t('footer_about')}
-            </h4>
-            <ul className="flex flex-col gap-2.5">
-              {footerLinks.about.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-white/60 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* CONTRIBUTE */}
-          <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              {t('footer_contribute')}
-            </h4>
-            <ul className="flex flex-col gap-2.5">
-              {footerLinks.contribute.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-white/60 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* DYNAMIC ACCORDION SECTIONS */}
+          <FooterSection title={t('footer_explore')} links={footerLinks.explore} />
+          <FooterSection title={t('footer_about')} links={footerLinks.about} />
+          <FooterSection title={t('footer_contribute')} links={footerLinks.contribute} />
 
           {/* NEWSLETTER */}
-          <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4">
-              {t('stay_updated')}
-            </h4>
-            <p className="text-sm text-white/60 mb-4">
-              {t('stay_updated_desc')}
-            </p>
-            <NewsletterForm />
-          </div>
+         
 
         </div>
       </div>
 
       {/* BOTTOM BAR */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span>© {new Date().getFullYear()} Ayiti Data. {t('footer_rights')}</span>
-          <div className="flex items-center gap-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+          <span className="text-sm text-white/60">© {new Date().getFullYear()} Ayiti Data. {t('footer_rights')}</span>
+          <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-6">
             {footerLinks.legal.map((link) => (
               <Link
                 key={link.href}
@@ -250,7 +227,7 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-          <p className="text-sm text-white/40">{t('footer_made')}</p>
+          <p className="text-xs text-white/40">{t('footer_made')}</p>
         </div>
       </div>
 
