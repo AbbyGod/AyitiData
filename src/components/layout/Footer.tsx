@@ -47,7 +47,7 @@ function NewsletterForm() {
   if (status === 'success') {
     return (
       <p className="text-sm font-semibold" style={{ color: '#6EE7B7' }}>
-        ✓ {t('loading') === 'Chargement...' ? 'Abonné !' : t('loading') === 'Chajman...' ? 'Ou abòne !' : t('loading') === 'Cargando...' ? '¡Suscrito!' : "You're subscribed!"}
+        ✓ {t('newsletter_success')}
       </p>
     )
   }

@@ -67,6 +67,7 @@ export const translations = {
     newsletter_desc: 'Get notified when new datasets, insights, and reports are published. No spam, unsubscribe anytime.',
     newsletter_placeholder: 'your@email.com',
     newsletter_btn: 'Subscribe',
+    newsletter_success: "You're subscribed!",
 
     // FOOTER
     footer_tagline: 'Making data about Haiti open, clean, and accessible to everyone.',
@@ -166,6 +167,7 @@ export const translations = {
     newsletter_desc: "Soyez notifié lors de la publication de nouveaux jeux de données, analyses et rapports. Pas de spam, désabonnement à tout moment.",
     newsletter_placeholder: 'votre@email.com',
     newsletter_btn: "S'abonner",
+    newsletter_success: 'Abonné !',
 
     // FOOTER
     footer_tagline: "Rendre les données sur Haïti ouvertes, propres et accessibles à tous.",
@@ -265,6 +267,7 @@ export const translations = {
     newsletter_desc: "Resevwa notifikasyon lè nouvo done, analiz ak rapò pibliye. Pa gen spam, dezabòne nenpòt ki lè.",
     newsletter_placeholder: 'ou@imèl.com',
     newsletter_btn: "Abònman",
+    newsletter_success: 'Ou abòne !',
 
     // FOOTER
     footer_tagline: "Fè done sou Ayiti ouvè, pwòp ak aksesib pou tout moun.",
@@ -364,6 +367,7 @@ export const translations = {
     newsletter_desc: "Recibe notificaciones cuando se publiquen nuevos datos, análisis e informes. Sin spam, cancela cuando quieras.",
     newsletter_placeholder: 'tu@correo.com',
     newsletter_btn: 'Suscribirse',
+    newsletter_success: '¡Suscrito!',
 
     // FOOTER
     footer_tagline: "Haciendo los datos sobre Haití abiertos, limpios y accesibles para todos.",
