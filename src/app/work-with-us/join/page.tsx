@@ -83,7 +83,7 @@ const translations = {
     successTitle: "Nou resevwa aplikasyon w lan!",
     successText: "Mèsi pou enterè w nan Ayiti Data. Nou pral evalye aplikasyon w lan epi n ap kontakte w byento.",
     expertiseAreas: [
-      'Finans ak Ekonomi', 'Swen Sante ak Sante Piblik', 'Edikasyon',
+      'Finans ak Ekonomi', 'Swen Sante ak Sante Piblik', 'Ledikasyon',
       'Syans Politik', 'Demografi ak Estatistik', 'Syans Done ak Jeni',
       'Jounalis ak Kominikasyon', 'Agrikilti ak Anviwònman', 'Dwa ak Politik Piblik', 'Lòt'
     ],
